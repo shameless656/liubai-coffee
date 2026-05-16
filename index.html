@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>留白 coffee</title>
+
+  <!-- 字体 & 样式 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body data-theme="night">
+  <!-- 背景装饰：粒子 -->
+  <div class="sparkles" id="sparkles"></div>
+  <!-- 背景装饰：浮动光球 -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- 主容器 -->
+  <div class="shell">
+    <!-- ====== 顶栏导航 ====== -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">
+          <img
+            src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=400&q=80"
+            alt="卡布奇诺"
+          />
+        </div>
+        <div>
+          <div class="brand-name">留白 coffee</div>
+          <div class="brand-tag">Warm Minimal Café</div>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="theme-toggle" id="themeToggle" title="切换主题">☀</button>
+        <button class="icon-btn" id="musicBtn" title="氛围模式">♪</button>
+        <button class="icon-btn burger-btn" id="burgerBtn" title="菜单" aria-label="打开导航菜单">☰</button>
+
+        <nav class="nav" id="mainNav">
+          <a class="nav-link active" href="#home" data-page="home">首页</a>
+          <a class="nav-link" href="#menu" data-page="menu">菜单</a>
+          <a class="nav-link" href="#about" data-page="about">关于</a>
+          <a class="nav-link" href="#contact" data-page="contact">联系</a>
+          <a class="nav-link" href="#community" data-page="community">社区</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ====== SPA 主内容区（JS 动态渲染） ====== -->
+    <main id="app" class="page"></main>
+
+    <!-- ====== 页脚 ====== -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="brand-name">留白 coffee</div>
+          <div class="brand-tag">Warm Minimal Café — 保留空间与情绪的呼吸感</div>
+        </div>
+        <nav class="footer-nav">
+          <a href="#home" data-page="home">首页</a>
+          <a href="#menu" data-page="menu">菜单</a>
+          <a href="#about" data-page="about">关于</a>
+          <a href="#contact" data-page="contact">联系</a>
+          <a href="#community" data-page="community">社区</a>
+        </nav>
+        <div class="footer-info">
+          <span>© 2026 留白 coffee</span>
+          <span>地址：留白街 12 号</span>
+          <span>营业时间：8:00 – 21:00</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- 详情弹窗 -->
+  <div class="modal" id="detailModal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">×</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- Toast 消息提示 -->
+  <div class="toast" id="toast"></div>
+
+  <!-- 回到顶部按钮 -->
+  <button class="back-to-top" id="backToTop" title="回到顶部" aria-label="回到顶部">↑</button>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>
