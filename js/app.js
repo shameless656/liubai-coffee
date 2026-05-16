@@ -1373,7 +1373,7 @@ function bindPageEvents() {
 
 // ==============================
 //  氛围音乐（Web Audio API）
-//  — 仅社区页面播放，咖啡馆白噪音风格
+//  — 舒缓节奏型咖啡馆氛围：柔和 Pad + 低频心跳 + 沙锤轻响
 // ==============================
 
 const ambientMusic = (() => {
@@ -1381,6 +1381,7 @@ const ambientMusic = (() => {
   let nodes = [];
   let gainNode = null;
   let _playing = false;
+  let rhythmTimer = null;
 
   /** 启动音频上下文（需在用户手势中触发） */
   function ensureContext() {
@@ -1390,7 +1391,52 @@ const ambientMusic = (() => {
     if (ctx.state === "suspended") ctx.resume();
   }
 
-  /** 创建一个柔和的持续音色（类 Pad 合成器） */
+  /** 低音心跳 — 短促正弦波快速衰减，营造沉稳节奏 */
+  function playHeartbeat(time, output) {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+
+    osc.type = "sine";
+    osc.frequency.value = 48;
+    filter.type = "lowpass";
+    filter.frequency.value = 220;
+    gain.gain.setValueAtTime(0, time);
+    gain.gain.linearRampToValueAtTime(0.25, time + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, time + 1.2);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(output);
+    osc.start(time);
+    osc.stop(time + 1.4);
+  }
+
+  /** 沙锤轻响 — 滤波噪声短脉冲，模拟细碎节奏 */
+  function playShaker(time, output) {
+    const bufferSize = ctx.sampleRate * 0.06;
+    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 8);
+    }
+    const src = ctx.createBufferSource();
+    src.buffer = buffer;
+    const gain = ctx.createGain();
+    const bp = ctx.createBiquadFilter();
+    bp.type = "bandpass";
+    bp.frequency.value = 2400 + Math.random() * 1600;
+    bp.Q.value = 0.6;
+    gain.gain.setValueAtTime(0, time);
+    gain.gain.linearRampToValueAtTime(0.018, time + 0.005);
+    gain.gain.exponentialRampToValueAtTime(0.001, time + 0.06);
+    src.connect(bp);
+    bp.connect(gain);
+    gain.connect(output);
+    src.start(time);
+  }
+
+  /** 柔和 Pad — 带呼吸式音量波动 */
   function createPad(freq, type, panVal, output) {
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
@@ -1401,8 +1447,9 @@ const ambientMusic = (() => {
     osc.type = type;
     osc.frequency.value = freq;
     gain.gain.value = 0;
-    lfo.frequency.value = 0.03 + Math.random() * 0.05;
-    lfoGain.gain.value = 0.012;
+    lfo.type = "sine";
+    lfo.frequency.value = 0.08 + Math.random() * 0.06;
+    lfoGain.gain.value = 0.008;
     pan.pan.value = panVal;
 
     lfo.connect(lfoGain);
@@ -1414,9 +1461,36 @@ const ambientMusic = (() => {
     osc.start();
     lfo.start();
 
-    gain.gain.linearRampToValueAtTime(0.06 + Math.random() * 0.04, ctx.currentTime + 1.5);
+    gain.gain.linearRampToValueAtTime(0.045 + Math.random() * 0.03, ctx.currentTime + 2);
 
     return { osc, gain, lfo, pan };
+  }
+
+  /** 启动节奏序列：心跳 + 沙锤按节拍触发 */
+  function startRhythm(output) {
+    if (rhythmTimer) return;
+    const tempo = 56;
+    const beatLen = 60 / tempo;
+    const now = ctx.currentTime;
+
+    function schedule() {
+      if (!_playing) { rhythmTimer = null; return; }
+      const t = ctx.currentTime;
+      const lookahead = 0.2;
+      let next = t + lookahead;
+      const startBeat = Math.ceil(t / beatLen);
+
+      for (let b = startBeat; b * beatLen < next; b++) {
+        const bt = b * beatLen;
+        playHeartbeat(bt, output);
+        playShaker(bt + 0.01, output);
+        playShaker(bt + 0.18, output);
+        if (b % 2 === 1) playShaker(bt + 0.09, output);
+        if (b % 4 === 0) playShaker(bt + 0.27, output);
+      }
+      rhythmTimer = setTimeout(schedule, 150);
+    }
+    schedule();
   }
 
   return {
@@ -1428,29 +1502,31 @@ const ambientMusic = (() => {
       _playing = true;
 
       gainNode = ctx.createGain();
-      gainNode.gain.value = 0.28;
+      gainNode.gain.value = 0.22;
       gainNode.connect(ctx.destination);
 
       const pads = [
-        [130.81, "sine", -0.7],    // C3
-        [164.81, "sine", 0.2],     // E3
-        [196.00, "sine", -0.1],    // G3
-        [261.63, "triangle", -0.6],// C4
-        [329.63, "triangle", 0.5], // E4
-        [87.31, "sine", 0],       // F2
-        [110.00, "sine", 0.3],     // A2
-        [220.00, "triangle", -0.3],// A3
+        [130.81, "sine", -0.7],
+        [164.81, "sine", 0.2],
+        [196.00, "sine", -0.1],
+        [261.63, "triangle", -0.5],
+        [329.63, "triangle", 0.4],
+        [87.31, "sine", 0],
+        [110.00, "sine", 0.25],
+        [174.61, "triangle", -0.35],
       ];
 
       nodes = pads.map(([freq, type, pan]) => createPad(freq, type, pan, gainNode));
+      startRhythm(gainNode);
     },
 
     stop() {
       if (!_playing) return;
       _playing = false;
+      if (rhythmTimer) { clearTimeout(rhythmTimer); rhythmTimer = null; }
       nodes.forEach((n) => {
-        try { n.gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 1); } catch (_) {}
-        setTimeout(() => { try { n.osc.stop(); n.lfo.stop(); } catch (_) {} }, 1200);
+        try { n.gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.5); } catch (_) {}
+        setTimeout(() => { try { n.osc.stop(); n.lfo.stop(); } catch (_) {} }, 1800);
       });
       nodes = [];
     },
