@@ -1372,6 +1372,92 @@ function bindPageEvents() {
 }
 
 // ==============================
+//  氛围音乐（Web Audio API）
+//  — 仅社区页面播放，咖啡馆白噪音风格
+// ==============================
+
+const ambientMusic = (() => {
+  let ctx = null;
+  let nodes = [];
+  let gainNode = null;
+  let _playing = false;
+
+  /** 启动音频上下文（需在用户手势中触发） */
+  function ensureContext() {
+    if (!ctx) {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (ctx.state === "suspended") ctx.resume();
+  }
+
+  /** 创建一个柔和的持续音色（类 Pad 合成器） */
+  function createPad(freq, type, panVal, output) {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const lfo = ctx.createOscillator();
+    const lfoGain = ctx.createGain();
+    const pan = ctx.createStereoPanner();
+
+    osc.type = type;
+    osc.frequency.value = freq;
+    gain.gain.value = 0;
+    lfo.frequency.value = 0.03 + Math.random() * 0.05;
+    lfoGain.gain.value = 0.012;
+    pan.pan.value = panVal;
+
+    lfo.connect(lfoGain);
+    lfoGain.connect(osc.frequency);
+    osc.connect(gain);
+    gain.connect(pan);
+    pan.connect(output);
+
+    osc.start();
+    lfo.start();
+
+    gain.gain.linearRampToValueAtTime(0.06 + Math.random() * 0.04, ctx.currentTime + 1.5);
+
+    return { osc, gain, lfo, pan };
+  }
+
+  return {
+    get playing() { return _playing; },
+
+    start() {
+      ensureContext();
+      if (_playing) return;
+      _playing = true;
+
+      gainNode = ctx.createGain();
+      gainNode.gain.value = 0.28;
+      gainNode.connect(ctx.destination);
+
+      const pads = [
+        [130.81, "sine", -0.7],    // C3
+        [164.81, "sine", 0.2],     // E3
+        [196.00, "sine", -0.1],    // G3
+        [261.63, "triangle", -0.6],// C4
+        [329.63, "triangle", 0.5], // E4
+        [87.31, "sine", 0],       // F2
+        [110.00, "sine", 0.3],     // A2
+        [220.00, "triangle", -0.3],// A3
+      ];
+
+      nodes = pads.map(([freq, type, pan]) => createPad(freq, type, pan, gainNode));
+    },
+
+    stop() {
+      if (!_playing) return;
+      _playing = false;
+      nodes.forEach((n) => {
+        try { n.gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 1); } catch (_) {}
+        setTimeout(() => { try { n.osc.stop(); n.lfo.stop(); } catch (_) {} }, 1200);
+      });
+      nodes = [];
+    },
+  };
+})();
+
+// ==============================
 //  全局初始事件（页面无关）
 // ==============================
 
@@ -1406,7 +1492,19 @@ function setInitialEvents() {
     showToast(state.theme === "night" ? "已切换夜间模式" : "已切换日间模式");
   };
 
-  musicBtn.onclick = () => showToast("氛围模式已开启");
+  musicBtn.onclick = () => {
+    if (!ambientMusic.playing) {
+      ambientMusic.start();
+      musicBtn.textContent = "♫";
+      musicBtn.style.color = "var(--accent)";
+      showToast("氛围音乐已开启");
+    } else {
+      ambientMusic.stop();
+      musicBtn.textContent = "♪";
+      musicBtn.style.color = "";
+      showToast("氛围音乐已暂停");
+    }
+  };
 
   // ---- 弹窗关闭 ----
   modalClose.onclick = () => {
