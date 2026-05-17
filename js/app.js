@@ -132,6 +132,24 @@ const imageMap = {
 };
 
 // ==============================
+//  全局图片预加载 — 页面打开后立即下载所有图片到浏览器缓存
+//  使用 new Image() 发起请求，无需等 DOM 渲染
+// ==============================
+(() => {
+  /** 收集所有已知图片路径 */
+  const urls = new Set([
+    ...heroImages,
+    ...aboutImages,
+    ...Object.values(menuData).flat().map((item) => item[2]),
+  ]);
+
+  urls.forEach((src) => {
+    const img = new Image();
+    img.src = src;
+  });
+})();
+
+// ==============================
 //  应用全局状态
 // ==============================
 
