@@ -162,6 +162,7 @@ body[data-theme="day"] {
 .about-hero { margin-bottom: 14px; }
 .about-hero h2 { margin: 0 0 8px; font-size: 1.3rem; }
 .about-carousel { min-height: 320px; border-radius: 22px; border: 1px solid var(--line); overflow: hidden; position: relative; cursor: pointer; background: #111; }
+.about-carousel-top { min-height: 420px; margin-bottom: 6px; }
 .about-slide { position: absolute; inset: 0; opacity: 0; transition: opacity .7s ease, transform .7s ease; background-size: cover; background-position: center; transform: scale(1.04); }
 .about-slide.active { opacity: 1; transform: scale(1); }
 .about-carousel-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,.5) 100%); z-index: 1; pointer-events: none; }
