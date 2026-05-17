@@ -357,7 +357,7 @@ function renderMenu() {
 
       return `
         <article class="menu-card" data-item="${item[0]}">
-          <img src="${item[2]}" alt="${item[0]}" loading="lazy" />
+          <img src="${item[2]}" alt="${item[0]}" />
           <div class="card-body">
             <div class="menu-topline">
               <h3>${item[0]}</h3>
