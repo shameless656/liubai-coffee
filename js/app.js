@@ -261,7 +261,7 @@ function renderHome() {
         </div>
       </div>
       <div class="grid">
-        <article class="card"><h3>视觉统一</h3><p>保留二次元氛围，但更适合品牌展示。</p></article>
+        <article class="card"><h3>视觉效果</h3><p>显示风格柔和，更适合品牌展示。</p></article>
         <article class="card"><h3>浏览清晰</h3><p>结构更像真实官网，重点信息更明确。</p></article>
         <article class="card"><h3>交互完整</h3><p>支持搜索、筛选、收藏、弹窗查看。</p></article>
         <article class="card"><h3>品牌故事</h3><p>从一杯咖啡开始，把安静、温暖和审美都放进日常。</p></article>
@@ -339,7 +339,7 @@ function renderMenu() {
 
       return `
         <article class="menu-card" data-item="${item[0]}">
-          <img src="${item[2]}" alt="${item[0]}" />
+          <img src="${item[2]}" alt="${item[0]}" loading="lazy" />
           <div class="card-body">
             <div class="menu-topline">
               <h3>${item[0]}</h3>
@@ -534,7 +534,7 @@ function renderAbout() {
           </div>
 
           <div class="timeline">
-            <div class="timeline-item"><strong>豆子与烘焙</strong><span>我们优先选择风味干净、甜感明显的咖啡豆，并配合轻中度烘焙，保持日常饮用的稳定性。</span></div>
+            <div class="timeline-item"><strong>豆子与烘焙</strong><span>精选阿拉比卡咖啡豆，并配合轻中度烘焙，保持日常饮用的稳定性。</span></div>
             <div class="timeline-item"><strong>出品标准</strong><span>从研磨、萃取到奶泡细节都尽量保持统一，让每一杯都具有一致的口感和温度。</span></div>
             <div class="timeline-item"><strong>空间氛围</strong><span>店内采用柔和灯光、木质桌椅和留白式布局，尽量减少视觉噪音，让人更容易放松。</span></div>
             <div class="timeline-item"><strong>品牌活动</strong><span>会不定期推出联名甜点、主题杯套、季节限定饮品和社区打卡活动。</span></div>
@@ -628,7 +628,7 @@ function renderContact() {
         <article class="card">
           <div class="contact-hero">
             <h2>到店信息</h2>
-            <p class="contact-note">青禾路 88 号，留白 coffee。地处安静街区，步行可达，适合工作日午后与周末放松。</p>
+            <p class="contact-note">留白路 88 号，留白 coffee。地处安静街区，步行可达，适合工作日午后与周末放松。</p>
           </div>
 
           <div class="contact-stack">
@@ -697,7 +697,7 @@ function renderContact() {
           </div>
         </div>
         <div class="quick-links-grid">
-          <article class="banner-card"><h3>预约座位</h3><p>适合双人约会、阅读和拍照。</p></article>
+          <article class="banner-card"><h3>预约座位</h3><p>适合约会、阅读和拍照。</p></article>
           <article class="banner-card"><h3>活动合作</h3><p>欢迎品牌联名与小型展览合作。</p></article>
           <article class="banner-card"><h3>外带服务</h3><p>通勤时顺手带一杯的稳定选择。</p></article>
           <article class="banner-card"><h3>企业接待</h3><p>支持团购和办公下午茶方案。</p></article>
