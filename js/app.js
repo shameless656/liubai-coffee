@@ -39,10 +39,10 @@ const heroCaptions = [
 
 /** 关于页轮播图 */
 const aboutImages = [
-  "./img/about-slide-1.jpg",
-  "./img/about-slide-2.jpg",
-  "./img/about-slide-3.jpg",
-  "./img/about-slide-4.jpg",
+  "./img/about-slide-1.webp",
+  "./img/about-slide-2.webp",
+  "./img/about-slide-3.webp",
+  "./img/about-slide-4.webp",
 ];
 
 const aboutCaptions = [
@@ -92,10 +92,10 @@ const menuData = {
 /** 图片路径映射，按页面/分类组织 */
 const imageMap = {
   about: [
-    "./img/about-slide-1.jpg",
-    "./img/about-slide-2.jpg",
-    "./img/about-slide-3.jpg",
-    "./img/about-slide-4.jpg",
+    "./img/about-slide-1.webp",
+    "./img/about-slide-2.webp",
+    "./img/about-slide-3.webp",
+    "./img/about-slide-4.webp",
   ],
   menu: {
     coffee: [
@@ -524,11 +524,33 @@ function renderMenu() {
   `;
 }
 
-/** 关于页 — 品牌理念 + 价值观 + 旅程 + 团队 + 轮播图 */
+/** 关于页 — 顶部轮播 + 品牌理念 + 价值观 + 旅程 + 团队 */
 function renderAbout() {
   return `
     <section class="panel">
-      <div class="section-head">
+
+      <aside class="about-carousel about-carousel-top" id="aboutCarousel">
+        ${aboutImages
+          .map(
+            (src, index) => `
+          <div class="about-slide ${index === state.aboutIndex ? "active" : ""}" style="background-image:url('${src}')"></div>
+        `
+          )
+          .join("")}
+        <div class="about-carousel-overlay"></div>
+        <div class="about-carousel-caption" id="aboutCaption">${aboutCaptions[state.aboutIndex]}</div>
+        <div class="about-carousel-dots" id="aboutDots">
+          ${aboutImages
+            .map(
+              (_, index) => `
+            <button class="about-dot ${index === state.aboutIndex ? "active" : ""}" data-about-dot="${index}" aria-label="切换到第 ${index + 1} 张关于页面图片"></button>
+          `
+            )
+            .join("")}
+        </div>
+      </aside>
+
+      <div class="section-head" style="margin-top:20px">
         <div>
           <p class="eyebrow">About</p>
           <h1>关于留白 coffee</h1>
@@ -558,27 +580,6 @@ function renderAbout() {
             <div class="timeline-item"><strong>品牌活动</strong><span>会不定期推出联名甜点、主题杯套、季节限定饮品和社区打卡活动。</span></div>
           </div>
         </section>
-
-        <aside class="about-carousel" id="aboutCarousel">
-          ${aboutImages
-            .map(
-              (src, index) => `
-            <div class="about-slide ${index === state.aboutIndex ? "active" : ""}" style="background-image:url('${src}')"></div>
-          `
-            )
-            .join("")}
-          <div class="about-carousel-overlay"></div>
-          <div class="about-carousel-caption" id="aboutCaption">${aboutCaptions[state.aboutIndex]}</div>
-          <div class="about-carousel-dots" id="aboutDots">
-            ${aboutImages
-              .map(
-                (_, index) => `
-              <button class="about-dot ${index === state.aboutIndex ? "active" : ""}" data-about-dot="${index}" aria-label="切换到第 ${index + 1} 张关于页面图片"></button>
-            `
-              )
-              .join("")}
-          </div>
-        </aside>
       </div>
 
       <div class="banner">
