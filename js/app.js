@@ -928,6 +928,24 @@ function bindPageEvents() {
   initFavoriteUI();
 }
 // ==============================
+//  背景音乐 — 控制 <audio> 元素播放/暂停
+// ==============================
+
+const ambientMusic = (function () {
+  var audio = document.getElementById("bgMusic");
+  return {
+    get playing() { return audio && !audio.paused; },
+    start: function () {
+      if (!audio || !audio.paused) return;
+      audio.play().catch(function () { showToast("点击任意位置后再试"); });
+    },
+    stop: function () {
+      if (audio) audio.pause();
+    },
+  };
+})();
+
+// ==============================
 //  全局初始事件（页面无关）
 // ==============================
 
@@ -982,6 +1000,7 @@ function initPage() {
   if (currentPage === "home") renderHeroDots();
   if (currentPage === "about") renderAboutDots();
   if (currentPage === "menu") initOrderUI();
+  if (currentPage === "community") bindCommunityEvents();
 }
 
 // ==============================
