@@ -727,31 +727,6 @@ function bindPageEvents() {
     };
   }
 
-  // ---- 菜单分类标签（DOM 驱动）----
-  app.querySelectorAll("[data-tab]").forEach(function (btn) {
-    btn.onclick = function () {
-      var cat = btn.dataset.tab;
-      app.querySelectorAll("[data-tab]").forEach(function (el) { el.classList.remove("active"); });
-      btn.classList.add("active");
-      state.menuTab = cat;
-
-      // Show/hide intro panels
-      app.querySelectorAll(".menu-intro-panel[data-intro]").forEach(function (p) {
-        p.style.display = p.dataset.intro === cat ? "" : "none";
-      });
-
-      // Show/hide cards
-      document.querySelectorAll(".menu-card").forEach(function (card) {
-        card.style.display = card.dataset.category === cat ? "" : "none";
-      });
-
-      // Reset search
-      var search = document.getElementById("menuSearch");
-      if (search) search.value = "";
-      showToast(cat === "coffee" ? "已切换至咖啡" : cat === "special" ? "已切换至特调" : "已切换至烘焙");
-    };
-  });
-
   // ---- 收藏按钮 ----
   app.querySelectorAll("[data-fav]").forEach(function (btn) {
     btn.onclick = function (event) {
@@ -816,578 +791,25 @@ function bindPageEvents() {
 
   // ---- 初始化收藏状态（读取 localStorage 更新 ♡/❤）----
   initFavoriteUI();
-}/** 打开菜单详情弹窗 */
-function openMenuDetail(item) {
-  modalBody.innerHTML = `
-    <div class="modal-body">
-      <div class="modal-img loading-skeleton" style="background-image:url('${item[2]}')"></div>
-      <div>
-        <p class="eyebrow">Detail</p>
-        <h2 style="margin:0 0 8px">${item[0]}</h2>
-        <p class="desc">${item[1]}</p>
-
-        <div class="modal-meta">
-          <span class="tag">¥${item[3]}</span>
-          <span class="tag">${item[4]}</span>
-          <span class="tag">${item[5]}</span>
-          <span class="tag">${item[6]}</span>
-        </div>
-
-        <div class="actions" style="margin-top:16px">
-          <button class="btn primary" id="buyBtn">加入点单</button>
-          <button class="btn secondary" id="shareBtn">收藏灵感</button>
-        </div>
-      </div>
-    </div>
-  `;
-
-  modal.classList.add("show");
-  modal.setAttribute("aria-hidden", "false");
-
-  document.getElementById("buyBtn").onclick = () => showToast(`已加入点单：${item[0]}`);
-  document.getElementById("shareBtn").onclick = () => showToast(`已收藏灵感：${item[0]}`);
 }
-
-// ==============================
-//  首页轮播逻辑
-// ==============================
-
-/** 根据 state.heroIndex 更新 slide/dot/caption 的激活状态 */
-function updateHeroCarousel() {
-  const slides = document.querySelectorAll(".hero-slide");
-  const dots = document.querySelectorAll(".slider-dot");
-  const heroCaption = document.getElementById("heroCaption");
-
-  slides.forEach((slide, index) => slide.classList.toggle("active", index === state.heroIndex));
-  dots.forEach((dot, index) => dot.classList.toggle("active", index === state.heroIndex));
-  if (heroCaption) heroCaption.textContent = heroCaptions[state.heroIndex];
-}
-
-/** 重新渲染 Hero 指示点 DOM */
-function renderHeroDots() {
-  const heroDots = document.getElementById("heroDots");
-  if (!heroDots) return;
-
-  heroDots.innerHTML = heroImages
-    .map(
-      (_, index) => `
-        <button class="slider-dot ${index === state.heroIndex ? "active" : ""}" data-hero-dot="${index}" aria-label="切换到第 ${index + 1} 张首页图片"></button>
-      `
-    )
-    .join("");
-
-  updateHeroCarousel();
-}
-
-// ==============================
-//  视觉特效：粒子 & 樱花
-// ==============================
-
-/** 创建背景闪烁粒子（14 颗随机位置） */
-function createSparkles() {
-  const container = document.getElementById("sparkles");
-  for (let i = 0; i < 14; i++) {
-    const sparkle = document.createElement("span");
-    sparkle.className = "sparkle";
-    sparkle.style.left = Math.random() * 100 + "vw";
-    sparkle.style.animationDuration = 6 + Math.random() * 8 + "s";
-    sparkle.style.animationDelay = -Math.random() * 10 + "s";
-    sparkle.style.top = -10 - Math.random() * 100 + "vh";
-    container.appendChild(sparkle);
-  }
-}
-
-/** 周期性生成樱花飘落元素，2.4 秒间隔 */
-function createSakura() {
-  setInterval(() => {
-    const sakura = document.createElement("span");
-    sakura.className = "sakura";
-    sakura.style.left = Math.random() * 100 + "vw";
-    sakura.style.animationDuration = 8 + Math.random() * 8 + "s";
-    sakura.style.opacity = 0.35 + Math.random() * 0.35;
-    document.body.appendChild(sakura);
-    setTimeout(() => sakura.remove(), 16000);
-  }, 2400);
-}
-
-// ==============================
-//  自动轮播定时器
-// ==============================
-
-/** 首页 Hero 自动轮播，每 4.5 秒切换 */
-function autoHeroSlider() {
-  setInterval(() => {
-    if (currentPage !== "home") return;
-    if (state.heroMode !== "auto") return;
-    state.heroIndex = (state.heroIndex + 1) % heroImages.length;
-    renderHeroDots();
-  }, 4500);
-}
-
-// ==============================
-//  关于页轮播逻辑
-// ==============================
-
-/** 根据 state.aboutIndex 更新关于页 slide/dot/caption */
-function updateAboutCarousel() {
-  const slides = document.querySelectorAll(".about-slide");
-  const dots = document.querySelectorAll(".about-dot");
-  const caption = document.getElementById("aboutCaption");
-
-  slides.forEach((slide, index) => slide.classList.toggle("active", index === state.aboutIndex));
-  dots.forEach((dot, index) => dot.classList.toggle("active", index === state.aboutIndex));
-  if (caption) caption.textContent = aboutCaptions[state.aboutIndex];
-}
-
-/** 重新渲染关于页轮播指示点 */
-function renderAboutDots() {
-  const aboutDots = document.getElementById("aboutDots");
-  if (!aboutDots) return;
-
-  aboutDots.innerHTML = aboutImages
-    .map(
-      (_, index) => `
-        <button class="about-dot ${index === state.aboutIndex ? "active" : ""}" data-about-dot="${index}" aria-label="切换到第 ${index + 1} 张关于页面图片"></button>
-      `
-    )
-    .join("");
-
-  updateAboutCarousel();
-}
-
-/** 关于页自动轮播，每 4 秒切换 */
-function autoAboutSlider() {
-  setInterval(() => {
-    if (currentPage !== "about") return;
-    state.aboutIndex = (state.aboutIndex + 1) % aboutImages.length;
-    renderAboutDots();
-  }, 4000);
-}
-
-// ==============================
-//  社区互动 — 数据 + 渲染 + 事件
-// ==============================
-
-/**
- * 绑定社区页所有交互逻辑
- * - 从 localStorage 加载帖子数据
- * - 渲染帖子列表（含回复嵌套）
- * - 发布新帖、点赞、回复、置顶、编辑、删除
- */
-function bindCommunityEvents() {
-  if (currentPage !== "community") return;
-
-  const STORAGE_KEY = "liubai-community-v1";
-  const form = document.getElementById("commentForm");
-  const nameInput = document.getElementById("commentName");
-  const textInput = document.getElementById("commentText");
-  const feed = document.getElementById("communityFeed");
-  const count = document.getElementById("communityCount");
-  const replyCount = document.getElementById("communityReplyCount");
-  const feedback = document.getElementById("commentFeedback");
-  const submitBtn = form?.querySelector(".community-submit");
-
-  /** 从 localStorage 读取帖子列表 */
-  function loadPosts() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      const parsed = raw ? JSON.parse(raw) : [];
-      return Array.isArray(parsed) ? parsed : [];
-    } catch {
-      return [];
-    }
-  }
-
-  /** 保存帖子列表到 localStorage */
-  function savePosts(posts) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
-  }
-
-  function setFeedback(text, type = "") {
-    feedback.textContent = text;
-    feedback.className = `feedback${type ? ` ${type}` : ""}`;
-  }
-
-  function formatTime(isoString) {
-    const date = new Date(isoString);
-    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")} ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
-  }
-
-  /** 首次访问时写入预设种子帖，方便演示 */
-  function seedPosts() {
-    const posts = loadPosts();
-    if (posts.length > 0) return; // 已有数据则跳过
-
-    const now = new Date().toISOString();
-    const seed = [
-      { id: crypto.randomUUID(), name: "留白店长", text: "今天推荐热美式配蓝莓司康，适合安静工作。", createdAt: now, likes: 12, pinned: true, replies: [{ id: crypto.randomUUID(), name: "阿澄", text: "已经加入今天的下午茶清单了！", createdAt: now }] },
-      { id: crypto.randomUUID(), name: "小夏", text: "窗边座位的光线太舒服了，拍照特别出片。", createdAt: now, likes: 8, pinned: false, replies: [{ id: crypto.randomUUID(), name: "橘子汽水", text: "想看同款拍照机位！", createdAt: now }, { id: crypto.randomUUID(), name: "店员", text: "靠近吧台右侧的窗边最好看。", createdAt: now }] },
-      { id: crypto.randomUUID(), name: "阿澄", text: "黑糖燕麦拿铁很顺口，甜度刚好，不会盖住咖啡香。", createdAt: now, likes: 15, pinned: false, replies: [{ id: crypto.randomUUID(), name: "小鱼", text: "这个我也想试！", createdAt: now }] },
-      { id: crypto.randomUUID(), name: "橘子汽水", text: "今天的抹茶云朵颜值好高，绿色和奶泡层次太好看了。", createdAt: now, likes: 21, pinned: false, replies: [{ id: crypto.randomUUID(), name: "留白店长", text: "拍照建议从左上角俯拍。", createdAt: now }] },
-      { id: crypto.randomUUID(), name: "小鱼", text: "提拉米苏杯的咖啡香很浓，配热拿铁就是完美下午茶。", createdAt: now, likes: 18, pinned: false, replies: [{ id: crypto.randomUUID(), name: "阿澄", text: "你这个搭配我记下了。", createdAt: now }] },
-      { id: crypto.randomUUID(), name: "月见", text: "店里的木质空间很安静，适合带电脑来待一下午。", createdAt: now, likes: 9, pinned: false, replies: [] },
-      { id: crypto.randomUUID(), name: "青柠", text: "桂花冷萃入口很清爽，夏天喝起来特别舒服。", createdAt: now, likes: 14, pinned: false, replies: [{ id: crypto.randomUUID(), name: "小夏", text: "这个季节限定感拉满。", createdAt: now }] },
-      { id: crypto.randomUUID(), name: "店员", text: "今晚 7 点以后人会少一些，适合想安静聊天或拍照的朋友。", createdAt: now, likes: 11, pinned: false, replies: [{ id: crypto.randomUUID(), name: "橘子汽水", text: "收到，今晚就去！", createdAt: now }] },
-    ];
-    savePosts(seed);
-  }
-
-  /** 头像渐变配色库，按名字长度取色 */
-  const avatarPalette = [
-    "linear-gradient(135deg,#ff9cc8,#ffd27d)",
-    "linear-gradient(135deg,#8de8ff,#7ce8b0)",
-    "linear-gradient(135deg,#a78bfa,#ff9cc8)",
-    "linear-gradient(135deg,#ffd27d,#ff9cc8)",
-    "linear-gradient(135deg,#8de8ff,#4da8ff)",
-  ];
-
-  /** 根据名称关键词匹配身份标签 */
-  function identityLabel(name) {
-    const lower = String(name || "").toLowerCase();
-    if (lower.includes("店员") || lower.includes("店长")) return "店员";
-    if (lower.includes("澄") || lower.includes("鱼") || lower.includes("夏")) return "常客";
-    if (lower.includes("橘") || lower.includes("青柠") || lower.includes("月见")) return "摄影党";
-    return "咖啡友";
-  }
-
-  function avatarBackground(name) {
-    return avatarPalette[String(name || "").length % avatarPalette.length];
-  }
-
-  /**
-   * 渲染帖子列表到页面
-   * - 排序：置顶优先，然后按时间倒序
-   * - 包含回复嵌套渲染
-   * - loading-skeleton 用于首帧闪烁提示
-   */
-  function renderFeed() {
-    const posts = loadPosts()
-      .slice()
-      .sort((a, b) => Number(b.pinned === true) - Number(a.pinned === true) || new Date(b.createdAt) - new Date(a.createdAt));
-    const totalReplies = posts.reduce((sum, post) => sum + (post.replies?.length || 0), 0);
-
-    count.textContent = posts.length;
-    replyCount.textContent = totalReplies;
-
-    feed.innerHTML = posts.length
-      ? posts
-          .map((post, index) => {
-            const replies = (post.replies || [])
-              .map(
-                (reply) => `
-                  <div class="card" style="margin-top:10px;padding:12px;background:rgba(255,255,255,.04)">
-                    <div class="post-user" style="margin-bottom:8px">
-                      <div class="avatar" style="width:32px;height:32px;font-size:.8rem;background:${avatarBackground(reply.name)}">${escapeHtml(reply.name).slice(0, 1).toUpperCase()}</div>
-                      <div>
-                        <div class="post-name" style="font-size:.92rem">${escapeHtml(reply.name)} <span class="post-pill" style="margin-left:6px;padding:2px 8px;font-size:.72rem">${identityLabel(reply.name)}</span></div>
-                        <div class="post-time">${formatTime(reply.createdAt)}</div>
-                      </div>
-                    </div>
-                    <p class="post-content" style="font-size:.95rem">${escapeHtml(reply.text)}</p>
-                  </div>
-                `
-              )
-              .join("");
-
-            return `
-              <article class="community-post loading-skeleton" data-post-id="${post.id}">
-                <div class="post-top">
-                  <div class="post-user">
-                    <div class="avatar" style="background:${avatarBackground(post.name)}">${escapeHtml(post.name).slice(0, 1).toUpperCase()}</div>
-                    <div>
-                      <div class="post-name">${escapeHtml(post.name)} <span class="post-pill" style="margin-left:6px;padding:2px 8px;font-size:.72rem">${identityLabel(post.name)}</span></div>
-                      <div class="post-time">${formatTime(post.createdAt)}</div>
-                    </div>
-                  </div>
-                  <span class="post-pill">${post.pinned ? "置顶" : "#" + (posts.length - index)}</span>
-                </div>
-
-                <p class="post-content">${escapeHtml(post.text)}</p>
-
-                <div class="post-actions">
-                  <span class="post-pill">❤ ${post.likes || 0}</span>
-                  <span class="post-pill">💬 ${(post.replies || []).length}</span>
-                  <span class="post-pill">留白 coffee</span>
-                  <button class="post-action-btn" data-like-post="${post.id}">点赞</button>
-                  <button class="post-action-btn" data-reply-post="${post.id}">回复</button>
-                  <button class="post-action-btn" data-pin-post="${post.id}">${post.pinned ? "取消置顶" : "置顶"}</button>
-                  <button class="post-action-btn" data-edit-post="${post.id}">编辑</button>
-                  <button class="post-action-btn" data-delete-post="${post.id}">删除</button>
-                </div>
-
-                <div class="post-replies">${replies}</div>
-              </article>
-            `;
-          })
-          .join("")
-      : '<article class="community-post"><p class="post-content">还没有动态，发布第一条社区内容吧。</p></article>';
-
-    requestAnimationFrame(() =>
-      feed.querySelectorAll(".loading-skeleton").forEach((el) => el.classList.remove("loading-skeleton"))
-    );
-  }
-
-  seedPosts();
-  renderFeed();
-
-  // ---- 发布帖子 ----
-  form.onsubmit = (event) => {
-    event.preventDefault();
-
-    const name = nameInput.value.trim();
-    const text = textInput.value.trim();
-
-    if (!name || !text) {
-      setFeedback("请输入昵称和动态内容。", "error");
-      return;
-    }
-
-    setBusy(submitBtn, true, "发布中…");
-    setFeedback("正在发布…");
-
-    setTimeout(() => {
-      const posts = loadPosts();
-      posts.push({ id: crypto.randomUUID(), name, text, createdAt: new Date().toISOString(), likes: 0, pinned: false, replies: [] });
-      savePosts(posts);
-      nameInput.value = "";
-      textInput.value = "";
-      setFeedback("发布成功。", "success");
-      setBusy(submitBtn, false);
-      renderFeed();
-      setTimeout(() => setFeedback(""), 1800);
-    }, 420);
-  };
-
-  // ---- 帖子操作：点赞/回复/置顶/编辑/删除（事件委托） ----
-  feed.onclick = (event) => {
-    const posts = loadPosts();
-    const likeBtn = event.target.closest("[data-like-post]");
-    const replyBtn = event.target.closest("[data-reply-post]");
-    const pinBtn = event.target.closest("[data-pin-post]");
-    const editBtn = event.target.closest("[data-edit-post]");
-    const deleteBtn = event.target.closest("[data-delete-post]");
-
-    const find = (id) => posts.find((p) => p.id === id);
-
-    if (likeBtn) {
-      const post = find(likeBtn.dataset.likePost);
-      if (!post) return;
-      post.likes = (post.likes || 0) + 1;
-      savePosts(posts);
-      renderFeed();
-      showToast("已点赞");
-      return;
-    }
-
-    if (replyBtn) {
-      const post = find(replyBtn.dataset.replyPost);
-      if (!post) return;
-      const input = prompt("输入回复内容");
-      if (input === null) return;
-      const txt = input.trim();
-      if (!txt) { setFeedback("回复不能为空。", "error"); return; }
-      post.replies = post.replies || [];
-      post.replies.push({ id: crypto.randomUUID(), name: "匿名回复", text: txt, createdAt: new Date().toISOString() });
-      savePosts(posts);
-      renderFeed();
-      showToast("回复已发布");
-      return;
-    }
-
-    if (pinBtn) {
-      const post = find(pinBtn.dataset.pinPost);
-      if (!post) return;
-      post.pinned = !post.pinned;
-      savePosts(posts);
-      renderFeed();
-      showToast(post.pinned ? "已置顶" : "已取消置顶");
-      return;
-    }
-
-    if (editBtn) {
-      const post = find(editBtn.dataset.editPost);
-      if (!post) return;
-      const input = prompt("编辑动态内容", post.text);
-      if (input === null) return;
-      const txt = input.trim();
-      if (!txt) { setFeedback("内容不能为空。", "error"); return; }
-      post.text = txt;
-      savePosts(posts);
-      renderFeed();
-      showToast("动态已更新");
-      return;
-    }
-
-    if (deleteBtn) {
-      const post = find(deleteBtn.dataset.deletePost);
-      if (!post) return;
-      if (!confirm("确定删除这条动态吗？")) return;
-      savePosts(posts.filter((p) => p.id !== post.id));
-      renderFeed();
-      showToast("动态已删除");
-    }
-  };
-}
-
-// ==============================
-//  页面内交互绑定（data-* 事件委托）
-// ==============================
-
-/**
- * 根据当前渲染的页面 DOM，绑定各类交互事件
- * - data-go：页面跳转
- * - data-hero-mode / data-hero-dot：首页轮播
- * - data-about-dot：关于页轮播
- * - data-tab：菜单分类切换
- * - data-fav：收藏/取消收藏
- * - menu-card：菜单详情弹窗
- * - data-copy-address / data-call / data-open-map：联系页
- */
-function bindPageEvents() {
-  // ---- 页面跳转按钮 ----
-  app.querySelectorAll("[data-go]").forEach((btn) => {
-    btn.onclick = () => {
-      state.page = btn.dataset.go;
-      initPage();
-    };
-  });
-
-  // ---- 首页轮播模式切换 ----
-  app.querySelectorAll("[data-hero-mode]").forEach((btn) => {
-    btn.onclick = () => {
-      app.querySelectorAll("[data-hero-mode]").forEach((el) => el.classList.remove("active"));
-      btn.classList.add("active");
-      state.heroMode = btn.dataset.heroMode;
-      showToast(`已切换为 ${btn.textContent} 模式`);
-    };
-  });
-
-  // ---- 首页轮播指示点 ----
-  app.querySelectorAll("[data-hero-dot]").forEach((btn) => {
-    btn.onclick = () => {
-      state.heroIndex = Number(btn.dataset.heroDot);
-      renderHeroDots();
-      showToast("已切换首页图片");
-    };
-  });
-
-  // ---- 关于页轮播指示点 ----
-  app.querySelectorAll("[data-about-dot]").forEach((btn) => {
-    btn.onclick = () => {
-      state.aboutIndex = Number(btn.dataset.aboutDot);
-      renderAboutDots();
-    };
-  });
-
-  // ---- 菜单搜索 ----
-  const menuSearch = document.getElementById("menuSearch");
-  if (menuSearch) {
-    menuSearch.oninput = () => {
-      state.search = menuSearch.value;
-      initPage();
-    };
-  }
-
-  // ---- 菜单分类标签 ----
-  app.querySelectorAll("[data-tab]").forEach((btn) => {
-    btn.onclick = () => {
-      app.querySelectorAll("[data-tab]").forEach((el) => el.classList.remove("active"));
-      btn.classList.add("active");
-      state.menuTab = btn.dataset.tab;
-      initPage();
-    };
-  });
-
-  // ---- 收藏按钮 ----
-  app.querySelectorAll("[data-fav]").forEach((btn) => {
-    btn.onclick = (event) => {
-      event.stopPropagation();
-      const name = btn.dataset.fav;
-      if (state.favorites.has(name)) {
-        state.favorites.delete(name);
-        showToast(`已取消收藏：${name}`);
-      } else {
-        state.favorites.add(name);
-        showToast(`已收藏：${name}`);
-      }
-      localStorage.setItem("liubai-favorites", JSON.stringify([...state.favorites]));
-      initPage();
-    };
-  });
-
-  // ---- 菜单卡片弹窗 ----
-  app.querySelectorAll(".menu-card").forEach((card) => {
-    card.onclick = () => {
-      const item = Object.values(menuData).flat().find((value) => value[0] === card.dataset.item);
-      if (item) openMenuDetail(item);
-    };
-  });
-
-  // ---- 联系页：复制地址 ----
-  const copyBtn = app.querySelector("[data-copy-address]");
-  if (copyBtn) {
-    copyBtn.onclick = () =>
-      navigator.clipboard.writeText("青禾路 88 号，留白 coffee").then(() => showToast("地址已复制")).catch(() => showToast("复制失败，请手动复制"));
-  }
-
-  // ---- 联系页：一键拨号 ----
-  const callBtn = app.querySelector("[data-call]");
-  if (callBtn) callBtn.onclick = () => { window.location.href = "tel:010-5688-1024"; };
-
-  // ---- 联系页：打开地图导航 ----
-  const mapBtn = app.querySelector("[data-open-map]");
-  if (mapBtn) {
-    mapBtn.onclick = () => window.open("https://www.google.com/maps/search/%E9%9D%92%E7%A6%BE%E8%B7%AF+88+%E5%8F%B7", "_blank", "noopener,noreferrer");
-  }
-
-  bindCommunityEvents();
-}
-
-// ==============================
-//  背景音乐 — 控制 <audio> 元素播放/暂停
-// ==============================
-
-const ambientMusic = (() => {
-  const audio = document.getElementById("bgMusic");
-
-  return {
-    get playing() { return audio && !audio.paused; },
-
-    start() {
-      if (!audio || !audio.paused) return; // already playing or no element
-      audio.play().catch(() => showToast("点击任意位置后再试"));
-    },
-
-    stop() {
-      if (audio) audio.pause();
-    },
-  };
-})();
-
 // ==============================
 //  全局初始事件（页面无关）
 // ==============================
 
-/** 绑定顶栏导航、主题切换、弹窗关闭、汉堡菜单、页脚导航 */
 function setInitialEvents() {
-  const burgerBtn = document.getElementById("burgerBtn");
-
-  // ---- 汉堡菜单（手机端） ----
-  burgerBtn.onclick = () => {
-    const isOpen = nav.classList.toggle("open");
+  var burgerBtn = document.getElementById("burgerBtn");
+  burgerBtn.onclick = function () {
+    var isOpen = nav.classList.toggle("open");
     burgerBtn.textContent = isOpen ? "✕" : "☰";
   };
-
-  // ---- 主题切换 ----
-  themeToggle.onclick = () => {
+  themeToggle.onclick = function () {
     state.theme = state.theme === "night" ? "day" : "night";
     document.body.dataset.theme = state.theme;
     localStorage.setItem("liubai-theme", state.theme);
     themeToggle.textContent = state.theme === "night" ? "☀" : "☾";
     showToast(state.theme === "night" ? "已切换夜间模式" : "已切换日间模式");
   };
-
-  musicBtn.onclick = () => {
+  musicBtn.onclick = function () {
     if (!ambientMusic.playing) {
       ambientMusic.start();
       musicBtn.textContent = "♫";
@@ -1400,41 +822,9 @@ function setInitialEvents() {
       showToast("氛围音乐已暂停");
     }
   };
-
-  // ---- 弹窗关闭 ----
-  modalClose.onclick = () => {
-    modal.classList.remove("show");
-    modal.setAttribute("aria-hidden", "true");
-  };
-
-  modal.onclick = (event) => {
-    if (event.target === modal) {
-      modal.classList.remove("show");
-      modal.setAttribute("aria-hidden", "true");
-    }
-  };
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      modal.classList.remove("show");
-      modal.setAttribute("aria-hidden", "true");
-    }
-  });
-
-}
-
-
-var currentPage = detectPage();
-
-/** 初始化当前页面的特定功能 */
-function initPage() {
-  if (currentPage === 'home') {
-    renderHeroDots();
-  }
-  if (currentPage === 'about') {
-    renderAboutDots();
-  }
-  bindPageEvents();
+  modalClose.onclick = function () { modal.classList.remove("show"); modal.setAttribute("aria-hidden", "true"); };
+  modal.onclick = function (event) { if (event.target === modal) { modal.classList.remove("show"); modal.setAttribute("aria-hidden", "true"); } };
+  document.addEventListener("keydown", function (event) { if (event.key === "Escape") { modal.classList.remove("show"); modal.setAttribute("aria-hidden", "true"); } });
 }
 
 // ==============================
@@ -1443,20 +833,19 @@ function initPage() {
 
 function detectPage() {
   var path = window.location.pathname;
-  if (path.indexOf('menu.html') !== -1) return 'menu';
-  if (path.indexOf('about.html') !== -1) return 'about';
-  if (path.indexOf('contact.html') !== -1) return 'contact';
-  if (path.indexOf('community.html') !== -1) return 'community';
-  if (path.indexOf('index.html') !== -1 || path === '/' || path.endsWith('/大作业/')) return 'home';
-  return 'home';
+  if (path.indexOf("menu.html") !== -1) return "menu";
+  if (path.indexOf("about.html") !== -1) return "about";
+  if (path.indexOf("contact.html") !== -1) return "contact";
+  if (path.indexOf("community.html") !== -1) return "community";
+  return "home";
 }
 
 var currentPage = detectPage();
 
 function initPage() {
   bindPageEvents();
-  if (currentPage === 'home') renderHeroDots();
-  if (currentPage === 'about') renderAboutDots();
+  if (currentPage === "home") renderHeroDots();
+  if (currentPage === "about") renderAboutDots();
 }
 
 // ==============================
@@ -1473,13 +862,13 @@ autoAboutSlider();
 //  回到顶部按钮
 // ==============================
 
-const backToTop = document.getElementById("backToTop");
+var backToTop = document.getElementById("backToTop");
 
 function toggleBackToTop() {
   backToTop.classList.toggle("show", window.scrollY > window.innerHeight * 0.6);
 }
 
-backToTop.onclick = () => {
+backToTop.onclick = function () {
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
