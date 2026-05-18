@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>留白 coffee - 社区</title>
+
+  <!-- 字体 & 样式 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./css/style.css" />
+
+  <!-- 预加载关键图片，首屏无需等待 -->
+  <link rel="preload" as="image" href="./img/hero-1.jpg" />
+  <link rel="preload" as="image" href="./img/hero-2.jpg" />
+  <link rel="preload" as="image" href="./img/hero-3.jpg" />
+  <link rel="preload" as="image" href="./img/hero-4.jpg" />
+  <link rel="preload" as="image" href="./img/about-slide-1.webp" />
+  <link rel="preload" as="image" href="./img/about-slide-2.webp" />
+  <link rel="preload" as="image" href="./img/about-slide-3.webp" />
+  <link rel="preload" as="image" href="./img/about-slide-4.webp" />
+</head>
+
+<body data-theme="night">
+  <!-- 背景装饰：粒子 -->
+  <div class="sparkles" id="sparkles"></div>
+  <!-- 背景装饰：浮动光球 -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- 主容器 -->
+  <div class="shell">
+    <!-- ====== 顶栏导航 ====== -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">
+          <img
+            src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=400&q=80"
+            alt="卡布奇诺"
+          />
+        </div>
+        <div>
+          <div class="brand-name">留白 coffee</div>
+          <div class="brand-tag">Warm Minimal Café</div>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="theme-toggle" id="themeToggle" title="切换主题">☀</button>
+        <button class="icon-btn" id="musicBtn" title="氛围模式">♪</button>
+        <button class="icon-btn burger-btn" id="burgerBtn" title="菜单" aria-label="打开导航菜单">☰</button>
+
+        <nav class="nav" id="mainNav">
+          <a class="nav-link" href="home.html">首页</a>
+          <a class="nav-link" href="menu.html">菜单</a>
+          <a class="nav-link" href="about.html">关于</a>
+          <a class="nav-link" href="contact.html">联系</a>
+          <a class="nav-link active" href="community.html">社区</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ====== SPA 主内容区（JS 动态渲染） ====== -->
+    <main id="app" class="page">
+    <section class="community-shell">
+      <aside class="community-rail">
+        <div class="community-hero"><p class="eyebrow">Community</p><h2>留白社区</h2><p>分享到店体验、推荐搭配、拍照瞬间与今日心情。</p></div>
+        <div class="community-stats">
+          <div class="community-stat"><strong id="communityCount">0</strong><span>社区动态</span></div>
+          <div class="community-stat"><strong id="communityReplyCount">0</strong><span>累计回复</span></div>
+          <div class="community-stat"><strong>24h</strong><span>持续开放</span></div>
+        </div>
+        <div class="community-stat"><strong>热门标签</strong><span>#拿铁 #抹茶 #司康 #窗边座位 #今日推荐</span></div>
+        <div class="community-stat"><strong>精选主题</strong><span>#下午茶 #工作区 #季节限定 #安静读书</span></div>
+        <div class="community-stat"><strong>本周热帖</strong><span>窗边座位、黑糖燕麦拿铁、桂花冷萃。</span></div>
+      </aside>
+      <section class="community-main">
+        <div class="community-header"><div><p class="eyebrow">Feed</p><h1>社区动态</h1></div><div class="menu-badge-row"><span class="menu-badge">热帖榜</span><span class="menu-badge">最近回复</span><span class="menu-badge">本周精选</span></div></div>
+        <div class="community-feed" id="communityFeed"></div>
+        <div class="banner"><div class="section-head" style="margin-bottom:0"><div><p class="eyebrow">Featured</p><h2>精选热帖</h2></div></div>
+        <div class="grid">
+          <article class="card"><h3>窗边光线太美</h3><p>很多顾客喜欢在窗边拍照，画面非常柔和。</p></article>
+          <article class="card"><h3>黑糖拿铁回购率高</h3><p>甜感和咖啡香平衡得很好，适合大多数人。</p></article>
+          <article class="card"><h3>桂花冷萃很清爽</h3><p>夏天最受欢迎的限定之一，反馈很好。</p></article>
+          <article class="card"><h3>提拉米苏杯搭配拿铁</h3><p>是社区里常被提到的经典下午茶组合。</p></article>
+          <article class="card"><h3>窗边阅读打卡</h3><p>很多人喜欢来这里带一本书坐一下午。</p></article>
+          <article class="card"><h3>新品试饮反馈</h3><p>社区讨论会帮助我们调整新品风味。</p></article>
+        </div></div>
+        <div class="banner"><div class="section-head" style="margin-bottom:0"><div><p class="eyebrow">Topics</p><h2>热门话题</h2></div></div>
+        <div class="grid">
+          <article class="card"><h3>#窗边座位</h3><p>最常被提到的拍照和阅读位置。</p></article>
+          <article class="card"><h3>#黑糖燕麦拿铁</h3><p>甜感和奶香都很稳定。</p></article>
+          <article class="card"><h3>#桂花冷萃</h3><p>季节限定讨论度最高的饮品之一。</p></article>
+          <article class="card"><h3>#提拉米苏杯</h3><p>咖啡与甜点搭配里的经典选择。</p></article>
+        </div></div>
+      </section>
+      <aside class="community-side">
+        <div><p class="eyebrow">Post</p><h2>发布动态</h2></div>
+        <form class="community-form" id="commentForm" novalidate>
+          <input id="commentName" type="text" placeholder="你的昵称" maxlength="24" required />
+          <textarea id="commentText" placeholder="分享你的体验、照片灵感或建议..." maxlength="300" required></textarea>
+          <button class="community-submit" type="submit">发布动态</button>
+          <p class="feedback" id="commentFeedback" aria-live="polite"></p>
+        </form>
+        <div class="timeline">
+          <div class="timeline-item"><strong>最近活跃</strong><span>今晚 7 点后会有更多安静座位。</span></div>
+          <div class="timeline-item"><strong>本周热议</strong><span>黑糖燕麦拿铁、抹茶云朵、桂花冷萃。</span></div>
+          <div class="timeline-item"><strong>发帖提示</strong><span>可以分享拍照点位、搭配建议或来店感受。</span></div>
+          <div class="timeline-item"><strong>互动建议</strong><span>回复别人的动态，会更容易被大家看到。</span></div>
+        </div>
+      </aside>
+    </section>
+    </main>
+
+    <!-- ====== 页脚 ====== -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="brand-name">留白 coffee</div>
+          <div class="brand-tag">Warm Minimal Café — 保留空间与情绪的呼吸感</div>
+        </div>
+        <nav class="footer-nav">
+          <a href="home.html">首页</a>
+          <a href="menu.html">菜单</a>
+          <a href="about.html">关于</a>
+          <a href="contact.html">联系</a>
+          <a href="community.html">社区</a>
+        </nav>
+        <div class="footer-info">
+          <span>© 2026 留白 coffee</span>
+          <span>地址：留白街 12 号</span>
+          <span>营业时间：8:00 – 21:00</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- 背景音乐（隐藏播放器，mp3 循环播放） -->
+  <audio id="bgMusic" src="123.mp3" loop preload="auto"></audio>
+
+  <!-- 详情弹窗 -->
+  <div class="modal" id="detailModal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">×</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- Toast 消息提示 -->
+  <div class="toast" id="toast"></div>
+
+  <!-- 回到顶部按钮 -->
+  <button class="back-to-top" id="backToTop" title="回到顶部" aria-label="回到顶部">↑</button>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>
