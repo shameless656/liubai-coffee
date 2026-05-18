@@ -164,6 +164,12 @@ const state = {
   aboutIndex: 0,                                                             // 关于页轮播当前索引
 };
 
+/* 点单数据 — { 名称: {price, qty} }，从 localStorage 恢复 */
+try {
+  var savedOrder = JSON.parse(localStorage.getItem("liubai-order") || "{}");
+} catch (e) { savedOrder = {}; }
+state.order = savedOrder;
+
 document.body.dataset.theme = state.theme;
 themeToggle.textContent = state.theme === "night" ? "☀" : "☾";
 
@@ -663,15 +669,133 @@ function bindCommunityEvents() {
 // ==============================
 
 /**
- * 根据当前渲染的页面 DOM，绑定各类交互事件
- * - data-go：页面跳转
- * - data-hero-mode / data-hero-dot：首页轮播
- * - data-about-dot：关于页轮播
- * - data-tab：菜单分类切换
- * - data-fav：收藏/取消收藏
- * - menu-card：菜单详情弹窗
- * - data-copy-address / data-call / data-open-map：联系页
+ * 绑定页面内交互事件入口
+ * 涵盖：轮播控制、菜单搜索/收藏/点单/详情弹窗、联系页操作
+ * 所有 data-* 事件委托均在主内容区 scope 内
  */
+
+/** 持久化 order 到 localStorage */
+function persistOrder() {
+  localStorage.setItem("liubai-order", JSON.stringify(state.order));
+}
+
+/**
+ * 重绘浮动点单栏 — 根据 state.order 渲染条目/数量/合计
+ * 若无内容则移除 has-items 类使其折叠为小圆点
+ */
+function renderOrderBar() {
+  var bar = document.getElementById("orderBar");
+  var list = document.getElementById("orderList");
+  var count = document.getElementById("orderCount");
+  var total = document.getElementById("orderTotal");
+  var empty = document.getElementById("orderEmpty");
+  if (!bar || !list) return;
+
+  var entries = Object.entries(state.order);
+  var itemCount = 0;
+  var totalPrice = 0;
+
+  if (entries.length === 0) {
+    bar.classList.remove("has-items");
+    count.textContent = "0";
+    total.textContent = "\u00A50";
+    return;
+  }
+
+  bar.classList.add("has-items");
+  list.innerHTML = entries.map(function (_a) {
+    var name = _a[0];
+    var o = _a[1];
+    totalPrice += o.price * o.qty;
+    itemCount += o.qty;
+    return '<div class="order-item">'
+      + '<span class="order-qty">'
+      + '<button class="order-qty-btn" data-order-dec="' + name + '">\u2212</button>'
+      + '<span class="order-qty-num">' + o.qty + '</span>'
+      + '<button class="order-qty-btn" data-order-inc="' + name + '">+</button>'
+      + '</span>'
+      + '<span class="order-item-name">' + name + '</span>'
+      + '<span class="order-item-price">\u00A5' + (o.price * o.qty) + '</span>'
+      + '</div>';
+  }).join("");
+
+  count.textContent = itemCount;
+  total.textContent = "\u00A5" + totalPrice;
+}
+
+/**
+ * 添加产品或增加已有产品数量
+ * @param {string} name - 产品名称
+ * @param {number} price - 单价
+ */
+function addToOrder(name, price) {
+  if (state.order[name]) {
+    state.order[name].qty += 1;
+  } else {
+    state.order[name] = { price: price, qty: 1 };
+  }
+  persistOrder();
+  renderOrderBar();
+}
+
+/** 初始化点单栏（从 localStorage 恢复并渲染） */
+function initOrderUI() {
+  renderOrderBar();
+  /* 绑定点单栏内部按钮（事件委托） */
+  var bar = document.getElementById("orderBar");
+  if (!bar) return;
+  bar.onclick = function (event) {
+    var dec = event.target.closest("[data-order-dec]");
+    var inc = event.target.closest("[data-order-inc]");
+    if (dec) {
+      event.stopPropagation();
+      var name = dec.dataset.orderDec;
+      if (state.order[name]) {
+        state.order[name].qty -= 1;
+        if (state.order[name].qty <= 0) delete state.order[name];
+        persistOrder();
+        renderOrderBar();
+        showToast("\u5DF2\u51CF\u5C11\uFF1A" + name);
+      }
+      return;
+    }
+    if (inc) {
+      event.stopPropagation();
+      var name2 = inc.dataset.orderInc;
+      addToOrder(name2, state.order[name2].price);
+      showToast("\u5DF2\u589E\u52A0\uFF1A" + name2);
+      return;
+    }
+  };
+
+  /* 清空与结算按钮 */
+  var clearBtn = document.getElementById("btnClearOrder");
+  var checkoutBtn = document.getElementById("btnCheckout");
+  if (clearBtn) {
+    clearBtn.onclick = function () {
+      if (Object.keys(state.order).length === 0) return;
+      if (!confirm("确定清空点单列表吗？")) return;
+      state.order = {};
+      persistOrder();
+      renderOrderBar();
+      showToast("点单已清空");
+    };
+  }
+  if (checkoutBtn) {
+    checkoutBtn.onclick = function () {
+      var entries = Object.entries(state.order);
+      if (entries.length === 0) { showToast("请先添加商品到点单"); return; }
+      var total = 0;
+      var summary = entries.map(function (_a) { var n = _a[0], o = _a[1]; total += o.price * o.qty; return o.qty + "x " + n + " (" + o.price + ")"; }).join(", ");
+      if (confirm("确认下单以下商品？\n" + summary + "\n\u5408\u8BA1\uFF1A\u00A5" + total + "\n\u7545\u996E\u60A8\u7684\u7F8E\u5473\u65F6\u5149\uFF01")) {
+        state.order = {};
+        persistOrder();
+        renderOrderBar();
+        showToast("\u4E0B\u5355\u6210\u529F\uFF01\u671F\u5F85\u4E3A\u60A8\u51C6\u5907\u3002");
+      }
+    };
+  }
+}
 
 /** 根据 localStorage 中的收藏列表更新所有 fav-btn 的状态 */
 function initFavoriteUI() {
@@ -726,6 +850,17 @@ function bindPageEvents() {
       });
     };
   }
+
+  // ---- 点单按钮（+）----
+  app.querySelectorAll("[data-order]").forEach(function (btn) {
+    btn.onclick = function (event) {
+      event.stopPropagation();
+      var name = btn.dataset.order;
+      var price = Number(btn.dataset.price);
+      addToOrder(name, price);
+      showToast("已加入点单：" + name);
+    };
+  });
 
   // ---- 收藏按钮 ----
   app.querySelectorAll("[data-fav]").forEach(function (btn) {
@@ -846,6 +981,7 @@ function initPage() {
   bindPageEvents();
   if (currentPage === "home") renderHeroDots();
   if (currentPage === "about") renderAboutDots();
+  if (currentPage === "menu") initOrderUI();
 }
 
 // ==============================
