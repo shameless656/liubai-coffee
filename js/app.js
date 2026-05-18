@@ -346,7 +346,7 @@ function createSakura() {
 /** 首页 Hero 自动轮播，每 4.5 秒切换 */
 function autoHeroSlider() {
   setInterval(() => {
-    if (state.page !== "home") return;
+    if (currentPage !== "home") return;
     if (state.heroMode !== "auto") return;
     state.heroIndex = (state.heroIndex + 1) % heroImages.length;
     renderHeroDots();
@@ -387,7 +387,7 @@ function renderAboutDots() {
 /** 关于页自动轮播，每 4 秒切换 */
 function autoAboutSlider() {
   setInterval(() => {
-    if (state.page !== "about") return;
+    if (currentPage !== "about") return;
     state.aboutIndex = (state.aboutIndex + 1) % aboutImages.length;
     renderAboutDots();
   }, 4000);
@@ -404,7 +404,7 @@ function autoAboutSlider() {
  * - 发布新帖、点赞、回复、置顶、编辑、删除
  */
 function bindCommunityEvents() {
-  if (state.page !== "community") return;
+  if (currentPage !== "community") return;
 
   const STORAGE_KEY = "liubai-community-v1";
   const form = document.getElementById("commentForm");
@@ -677,7 +677,7 @@ function bindPageEvents() {
   app.querySelectorAll("[data-go]").forEach((btn) => {
     btn.onclick = () => {
       state.page = btn.dataset.go;
-      render();
+      initPage();
     };
   });
 
@@ -713,7 +713,7 @@ function bindPageEvents() {
   if (menuSearch) {
     menuSearch.oninput = () => {
       state.search = menuSearch.value;
-      render();
+      initPage();
     };
   }
 
@@ -723,7 +723,7 @@ function bindPageEvents() {
       app.querySelectorAll("[data-tab]").forEach((el) => el.classList.remove("active"));
       btn.classList.add("active");
       state.menuTab = btn.dataset.tab;
-      render();
+      initPage();
     };
   });
 
@@ -740,7 +740,7 @@ function bindPageEvents() {
         showToast(`已收藏：${name}`);
       }
       localStorage.setItem("liubai-favorites", JSON.stringify([...state.favorites]));
-      render();
+      initPage();
     };
   });
 
@@ -801,18 +801,6 @@ const ambientMusic = (() => {
 function setInitialEvents() {
   const burgerBtn = document.getElementById("burgerBtn");
 
-  // ---- 顶栏导航 ----
-  nav.onclick = (event) => {
-    const link = event.target.closest("a[data-page]");
-    if (!link) return;
-    event.preventDefault();
-    state.page = link.dataset.page;
-    history.replaceState(null, "", link.getAttribute("href"));
-    nav.classList.remove("open");
-    burgerBtn.textContent = "☰";
-    render();
-  };
-
   // ---- 汉堡菜单（手机端） ----
   burgerBtn.onclick = () => {
     const isOpen = nav.classList.toggle("open");
@@ -862,16 +850,6 @@ function setInitialEvents() {
     }
   });
 
-  // ---- 页脚导航 ----
-  document.querySelector(".site-footer").onclick = (event) => {
-    const link = event.target.closest("a[data-page]");
-    if (!link) return;
-    event.preventDefault();
-    state.page = link.dataset.page;
-    history.replaceState(null, "", link.getAttribute("href"));
-    render();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 }
 
 // ==============================
@@ -879,12 +857,54 @@ function setInitialEvents() {
 // ==============================
 
 /** 重新渲染整页内容，绑定事件，初始化轮播 */
-async function render() {
-  setActiveNav();
-  app.innerHTML = await renderPage();
+
+// ==============================
+//  多页面检测与初始化
+// ==============================
+
+/** 根据当前 URL 判断所在页面 */
+function detectPage() {
+  var path = window.location.pathname;
+  if (path.indexOf('menu.html') !== -1) return 'menu';
+  if (path.indexOf('about.html') !== -1) return 'about';
+  if (path.indexOf('contact.html') !== -1) return 'contact';
+  if (path.indexOf('community.html') !== -1) return 'community';
+  return 'home';
+}
+
+var currentPage = detectPage();
+
+/** 初始化当前页面的特定功能 */
+function initPage() {
+  if (currentPage === 'home') {
+    renderHeroDots();
+  }
+  if (currentPage === 'about') {
+    renderAboutDots();
+  }
   bindPageEvents();
-  if (state.page === "home") renderHeroDots();
-  if (state.page === "about") renderAboutDots();
+}
+
+// ==============================
+//  多页面检测与初始化
+// ==============================
+
+function detectPage() {
+  var path = window.location.pathname;
+  if (path.indexOf('menu.html') !== -1) return 'menu';
+  if (path.indexOf('about.html') !== -1) return 'about';
+  if (path.indexOf('contact.html') !== -1) return 'contact';
+  if (path.indexOf('community.html') !== -1) return 'community';
+  if (path.indexOf('index.html') !== -1 || path === '/' || path.endsWith('/大作业/')) return 'home';
+  return 'home';
+}
+
+var currentPage = detectPage();
+
+function initPage() {
+  if (currentPage === 'home') renderHeroDots();
+  if (currentPage === 'about') renderAboutDots();
+  bindPageEvents();
 }
 
 // ==============================
@@ -893,7 +913,7 @@ async function render() {
 createSparkles();
 createSakura();
 setInitialEvents();
-render();
+initPage();
 autoHeroSlider();
 autoAboutSlider();
 
@@ -903,7 +923,6 @@ autoAboutSlider();
 
 const backToTop = document.getElementById("backToTop");
 
-/** 当滚动超过一屏时显示按钮，否则隐藏 */
 function toggleBackToTop() {
   backToTop.classList.toggle("show", window.scrollY > window.innerHeight * 0.6);
 }
