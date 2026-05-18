@@ -4,57 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>留白 coffee - 社区</title>
-
-  <!-- 字体 & 样式 -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800;900&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./css/style.css" />
-
-  <!-- 预加载关键图片，首屏无需等待 -->
-  <link rel="preload" as="image" href="./img/hero-1.jpg" />
-  <link rel="preload" as="image" href="./img/hero-2.jpg" />
-  <link rel="preload" as="image" href="./img/hero-3.jpg" />
-  <link rel="preload" as="image" href="./img/hero-4.jpg" />
-  <link rel="preload" as="image" href="./img/about-slide-1.webp" />
-  <link rel="preload" as="image" href="./img/about-slide-2.webp" />
-  <link rel="preload" as="image" href="./img/about-slide-3.webp" />
-  <link rel="preload" as="image" href="./img/about-slide-4.webp" />
 </head>
-
 <body data-theme="night">
-  <!-- 背景装饰：粒子 -->
   <div class="sparkles" id="sparkles"></div>
-  <!-- 背景装饰：浮动光球 -->
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
 
-  <!-- 主容器 -->
   <div class="shell">
-    <!-- ====== 顶栏导航 ====== -->
     <header class="topbar">
       <div class="brand">
-        <div class="brand-mark">
-          <img
-            src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=400&q=80"
-            alt="卡布奇诺"
-          />
-        </div>
+        <div class="brand-mark"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=400&q=80" alt="卡布奇诺" /></div>
         <div>
           <div class="brand-name">留白 coffee</div>
           <div class="brand-tag">Warm Minimal Café</div>
         </div>
       </div>
-
       <div class="top-actions">
         <button class="theme-toggle" id="themeToggle" title="切换主题">☀</button>
         <button class="icon-btn" id="musicBtn" title="氛围模式">♪</button>
         <button class="icon-btn burger-btn" id="burgerBtn" title="菜单" aria-label="打开导航菜单">☰</button>
-
         <nav class="nav" id="mainNav">
           <a class="nav-link" href="home.html">首页</a>
           <a class="nav-link" href="menu.html">菜单</a>
@@ -65,23 +38,96 @@
       </div>
     </header>
 
-    <!-- ====== SPA 主内容区（JS 动态渲染） ====== -->
     <main id="app" class="page">
     <section class="community-shell">
       <aside class="community-rail">
         <div class="community-hero"><p class="eyebrow">Community</p><h2>留白社区</h2><p>分享到店体验、推荐搭配、拍照瞬间与今日心情。</p></div>
         <div class="community-stats">
-          <div class="community-stat"><strong id="communityCount">0</strong><span>社区动态</span></div>
-          <div class="community-stat"><strong id="communityReplyCount">0</strong><span>累计回复</span></div>
+          <div class="community-stat"><strong id="communityCount">8</strong><span>社区动态</span></div>
+          <div class="community-stat"><strong id="communityReplyCount">11</strong><span>累计回复</span></div>
           <div class="community-stat"><strong>24h</strong><span>持续开放</span></div>
         </div>
         <div class="community-stat"><strong>热门标签</strong><span>#拿铁 #抹茶 #司康 #窗边座位 #今日推荐</span></div>
         <div class="community-stat"><strong>精选主题</strong><span>#下午茶 #工作区 #季节限定 #安静读书</span></div>
         <div class="community-stat"><strong>本周热帖</strong><span>窗边座位、黑糖燕麦拿铁、桂花冷萃。</span></div>
       </aside>
+
       <section class="community-main">
         <div class="community-header"><div><p class="eyebrow">Feed</p><h1>社区动态</h1></div><div class="menu-badge-row"><span class="menu-badge">热帖榜</span><span class="menu-badge">最近回复</span><span class="menu-badge">本周精选</span></div></div>
-        <div class="community-feed" id="communityFeed"></div>
+        <div class="community-feed" id="communityFeed">
+          <article class="community-post" data-post-id="seed-1">
+            <div class="post-top">
+              <div class="post-user">
+                <div class="avatar" style="background:linear-gradient(135deg,#8de8ff,#7ce8b0)">留</div>
+                <div><div class="post-name">留白店长 <span class="post-pill" style="margin-left:6px;padding:2px 8px;font-size:.72rem">店员</span></div><div class="post-time">刚刚</div></div>
+              </div>
+              <span class="post-pill">置顶</span>
+            </div>
+            <p class="post-content">今天推荐热美式配蓝莓司康，适合安静工作。</p>
+            <div class="post-actions">
+              <span class="post-pill">❤ 12</span><span class="post-pill">💬 1</span><span class="post-pill">留白 coffee</span>
+              <button class="post-action-btn" data-like-post="seed-1">点赞</button>
+              <button class="post-action-btn" data-reply-post="seed-1">回复</button>
+              <button class="post-action-btn" data-pin-post="seed-1">取消置顶</button>
+              <button class="post-action-btn" data-edit-post="seed-1">编辑</button>
+              <button class="post-action-btn" data-delete-post="seed-1">删除</button>
+            </div>
+            <div class="post-replies">
+              <div class="card" style="margin-top:10px;padding:12px;background:rgba(255,255,255,.04)">
+                <div class="post-user" style="margin-bottom:8px">
+                  <div class="avatar" style="width:32px;height:32px;font-size:.8rem;background:linear-gradient(135deg,#a78bfa,#ff9cc8)">阿</div>
+                  <div><div class="post-name" style="font-size:.92rem">阿澄 <span class="post-pill" style="margin-left:6px;padding:2px 8px;font-size:.72rem">常客</span></div><div class="post-time">刚刚</div></div>
+                </div>
+                <p class="post-content" style="font-size:.95rem">已经加入今天的下午茶清单了！</p>
+              </div>
+            </div>
+          </article>
+          <article class="community-post" data-post-id="seed-2">
+            <div class="post-top">
+              <div class="post-user">
+                <div class="avatar" style="background:linear-gradient(135deg,#ff9cc8,#ffd27d)">小</div>
+                <div><div class="post-name">小夏 <span class="post-pill" style="margin-left:6px;padding:2px 8px;font-size:.72rem">常客</span></div><div class="post-time">刚刚</div></div>
+              </div>
+              <span class="post-pill">#8</span>
+            </div>
+            <p class="post-content">窗边座位的光线太舒服了，拍照特别出片。</p>
+            <div class="post-actions">
+              <span class="post-pill">❤ 8</span><span class="post-pill">💬 2</span><span class="post-pill">留白 coffee</span>
+              <button class="post-action-btn" data-like-post="seed-2">点赞</button>
+              <button class="post-action-btn" data-reply-post="seed-2">回复</button>
+              <button class="post-action-btn" data-pin-post="seed-2">置顶</button>
+              <button class="post-action-btn" data-edit-post="seed-2">编辑</button>
+              <button class="post-action-btn" data-delete-post="seed-2">删除</button>
+            </div>
+            <div class="post-replies">
+              <div class="card" style="margin-top:10px;padding:12px;background:rgba(255,255,255,.04)">
+                <div class="post-user" style="margin-bottom:8px"><div class="avatar" style="width:32px;height:32px;font-size:.8rem;background:linear-gradient(135deg,#ffd27d,#ff9cc8)">橘</div><div><div class="post-name" style="font-size:.92rem">橘子汽水 <span class="post-pill" style="margin-left:6px;padding:2px 8px;font-size:.72rem">摄影党</span></div><div class="post-time">刚刚</div></div></div>
+                <p class="post-content" style="font-size:.95rem">想看同款拍照机位！</p>
+              </div>
+            </div>
+          </article>
+          <article class="community-post" data-post-id="seed-3">
+            <div class="post-top">
+              <div class="post-user"><div class="avatar" style="background:linear-gradient(135deg,#a78bfa,#ff9cc8)">阿</div><div><div class="post-name">阿澄 <span class="post-pill" style="margin-left:6px;padding:2px 8px;font-size:.72rem">常客</span></div><div class="post-time">刚刚</div></div></div>
+              <span class="post-pill">#7</span>
+            </div>
+            <p class="post-content">黑糖燕麦拿铁很顺口，甜度刚好，不会盖住咖啡香。</p>
+            <div class="post-actions">
+              <span class="post-pill">❤ 15</span><span class="post-pill">💬 1</span><span class="post-pill">留白 coffee</span>
+              <button class="post-action-btn" data-like-post="seed-3">点赞</button>
+              <button class="post-action-btn" data-reply-post="seed-3">回复</button>
+              <button class="post-action-btn" data-pin-post="seed-3">置顶</button>
+              <button class="post-action-btn" data-edit-post="seed-3">编辑</button>
+              <button class="post-action-btn" data-delete-post="seed-3">删除</button>
+            </div>
+            <div class="post-replies">
+              <div class="card" style="margin-top:10px;padding:12px;background:rgba(255,255,255,.04)">
+                <div class="post-user" style="margin-bottom:8px"><div class="avatar" style="width:32px;height:32px;font-size:.8rem;background:linear-gradient(135deg,#8de8ff,#4da8ff)">鱼</div><div><div class="post-name" style="font-size:.92rem">小鱼 <span class="post-pill" style="margin-left:6px;padding:2px 8px;font-size:.72rem">常客</span></div><div class="post-time">刚刚</div></div></div>
+                <p class="post-content" style="font-size:.95rem">这个我也想试！</p>
+              </div>
+            </div>
+          </article>
+        </div>
         <div class="banner"><div class="section-head" style="margin-bottom:0"><div><p class="eyebrow">Featured</p><h2>精选热帖</h2></div></div>
         <div class="grid">
           <article class="card"><h3>窗边光线太美</h3><p>很多顾客喜欢在窗边拍照，画面非常柔和。</p></article>
@@ -99,6 +145,7 @@
           <article class="card"><h3>#提拉米苏杯</h3><p>咖啡与甜点搭配里的经典选择。</p></article>
         </div></div>
       </section>
+
       <aside class="community-side">
         <div><p class="eyebrow">Post</p><h2>发布动态</h2></div>
         <form class="community-form" id="commentForm" novalidate>
@@ -117,44 +164,22 @@
     </section>
     </main>
 
-    <!-- ====== 页脚 ====== -->
     <footer class="site-footer">
       <div class="footer-inner">
-        <div class="footer-brand">
-          <div class="brand-name">留白 coffee</div>
-          <div class="brand-tag">Warm Minimal Café — 保留空间与情绪的呼吸感</div>
-        </div>
+        <div class="footer-brand"><div class="brand-name">留白 coffee</div><div class="brand-tag">Warm Minimal Café — 保留空间与情绪的呼吸感</div></div>
         <nav class="footer-nav">
-          <a href="home.html">首页</a>
-          <a href="menu.html">菜单</a>
-          <a href="about.html">关于</a>
-          <a href="contact.html">联系</a>
-          <a href="community.html">社区</a>
+          <a href="home.html">首页</a><a href="menu.html">菜单</a><a href="about.html">关于</a><a href="contact.html">联系</a><a href="community.html">社区</a>
         </nav>
-        <div class="footer-info">
-          <span>© 2026 留白 coffee</span>
-          <span>地址：留白街 12 号</span>
-          <span>营业时间：8:00 – 21:00</span>
-        </div>
+        <div class="footer-info"><span>© 2026 留白 coffee</span><span>地址：留白街 12 号</span><span>营业时间：8:00 – 21:00</span></div>
       </div>
     </footer>
   </div>
 
-  <!-- 背景音乐（隐藏播放器，mp3 循环播放） -->
   <audio id="bgMusic" src="123.mp3" loop preload="auto"></audio>
-
-  <!-- 详情弹窗 -->
   <div class="modal" id="detailModal" aria-hidden="true">
-    <div class="modal-content">
-      <button class="modal-close" id="modalClose">×</button>
-      <div id="modalBody"></div>
-    </div>
+    <div class="modal-content"><button class="modal-close" id="modalClose">×</button><div id="modalBody"></div></div>
   </div>
-
-  <!-- Toast 消息提示 -->
   <div class="toast" id="toast"></div>
-
-  <!-- 回到顶部按钮 -->
   <button class="back-to-top" id="backToTop" title="回到顶部" aria-label="回到顶部">↑</button>
 
   <script src="./js/app.js"></script>
