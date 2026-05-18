@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>留白 coffee - 精选菜单</title>
+
+  <!-- 字体 & 样式 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./css/style.css" />
+
+  <!-- 预加载关键图片，首屏无需等待 -->
+  <link rel="preload" as="image" href="./img/hero-1.jpg" />
+  <link rel="preload" as="image" href="./img/hero-2.jpg" />
+  <link rel="preload" as="image" href="./img/hero-3.jpg" />
+  <link rel="preload" as="image" href="./img/hero-4.jpg" />
+  <link rel="preload" as="image" href="./img/about-slide-1.webp" />
+  <link rel="preload" as="image" href="./img/about-slide-2.webp" />
+  <link rel="preload" as="image" href="./img/about-slide-3.webp" />
+  <link rel="preload" as="image" href="./img/about-slide-4.webp" />
+</head>
+
+<body data-theme="night">
+  <!-- 背景装饰：粒子 -->
+  <div class="sparkles" id="sparkles"></div>
+  <!-- 背景装饰：浮动光球 -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- 主容器 -->
+  <div class="shell">
+    <!-- ====== 顶栏导航 ====== -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">
+          <img
+            src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=400&q=80"
+            alt="卡布奇诺"
+          />
+        </div>
+        <div>
+          <div class="brand-name">留白 coffee</div>
+          <div class="brand-tag">Warm Minimal Café</div>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="theme-toggle" id="themeToggle" title="切换主题">☀</button>
+        <button class="icon-btn" id="musicBtn" title="氛围模式">♪</button>
+        <button class="icon-btn burger-btn" id="burgerBtn" title="菜单" aria-label="打开导航菜单">☰</button>
+
+        <nav class="nav" id="mainNav">
+          <a class="nav-link" href="home.html">首页</a>
+          <a class="nav-link active" href="menu.html">菜单</a>
+          <a class="nav-link" href="about.html">关于</a>
+          <a class="nav-link" href="contact.html">联系</a>
+          <a class="nav-link" href="community.html">社区</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ====== SPA 主内容区（JS 动态渲染） ====== -->
+    <main id="app" class="page">
+    <section class="panel">
+      <div class="section-head">
+        <div><p class="eyebrow">Menu</p><h1>精选菜单</h1></div>
+        <div class="section-actions">
+          <input class="search" id="menuSearch" type="search" placeholder="搜索饮品、甜点、标签" />
+        </div>
+      </div>
+      <div class="menu-intro" id="menuIntro">
+    <div class="menu-panel" id="menuPanelcoffee" style="display:block">
+        <h3 id="menuSectionLabel">经典咖啡</h3>
+        <p id="menuIntroText">适合日常饮用的稳定风味，强调干净、顺口与平衡。</p>
+        <div class="menu-badge-row">
+          <span class="menu-badge">推荐</span><span class="menu-badge">热销</span><span class="menu-badge">季节限定</span><span class="menu-badge">适合拍照</span>
+        </div>
+      </div>
+      <div class="menu-panel" id="menuGuidecoffee" style="display:block">
+        <h3>本页说明</h3>
+        <div class="menu-list">
+            <div class="menu-list-item"><div><strong>手冲耶加雪菲</strong><span>花香与柑橘酸质，清爽干净。</span></div><span>✓</span></div>
+            <div class="menu-list-item"><div><strong>晨雾美式</strong><span>醒神提气，适合早晨和工作时段。</span></div><span>✓</span></div>
+            <div class="menu-list-item"><div><strong>留白拿铁</strong><span>柔和奶香，口感顺滑。</span></div><span>✓</span></div>
+            <div class="menu-list-item"><div><strong>榛果拿铁</strong><span>坚果香与奶泡的温润组合。</span></div><span>✓</span></div>
+        </div>
+      </div>
+      <div class="menu-grid" id="menuGridcoffee" style="display:block">
+      <article class="menu-card" data-item="留白拿铁">
+        <img src="./img/hero-2.jpg" alt="留白拿铁" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>留白拿铁</h3><button class="fav-btn" data-fav="留白拿铁">♡</button></div>
+          <p class="muted-p">柔和奶香与中度烘焙拼配豆，入口顺滑。</p>
+          <div class="menu-topline"><span class="price">¥28</span><span class="muted-p">热门</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="晨雾美式">
+        <img src="./img/menu-2.jpg" alt="晨雾美式" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>晨雾美式</h3><button class="fav-btn" data-fav="晨雾美式">♡</button></div>
+          <p class="muted-p">干净明亮，适合早晨醒神与长时间工作。</p>
+          <div class="menu-topline"><span class="price">¥24</span><span class="muted-p">经典</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="焦糖玛奇朵">
+        <img src="./img/menu-3.jpg" alt="焦糖玛奇朵" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>焦糖玛奇朵</h3><button class="fav-btn" data-fav="焦糖玛奇朵">♡</button></div>
+          <p class="muted-p">层次分明，焦糖香气与浓缩风味彼此衬托。</p>
+          <div class="menu-topline"><span class="price">¥32</span><span class="muted-p">推荐</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="手冲耶加雪菲">
+        <img src="./img/menu-4.jpg" alt="手冲耶加雪菲" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>手冲耶加雪菲</h3><button class="fav-btn" data-fav="手冲耶加雪菲">♡</button></div>
+          <p class="muted-p">花香与柑橘酸质平衡，尾韵干净。</p>
+          <div class="menu-topline"><span class="price">¥36</span><span class="muted-p">精品</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="榛果拿铁">
+        <img src="./img/menu-5.jpg" alt="榛果拿铁" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>榛果拿铁</h3><button class="fav-btn" data-fav="榛果拿铁">♡</button></div>
+          <p class="muted-p">榛果香气与奶泡融合，口感温润。</p>
+          <div class="menu-topline"><span class="price">¥30</span><span class="muted-p">热门</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="冰美式">
+        <img src="./img/menu-6.webp" alt="冰美式" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>冰美式</h3><button class="fav-btn" data-fav="冰美式">♡</button></div>
+          <p class="muted-p">浓缩与冰水混合，清爽解暑，适合夏日午后。</p>
+          <div class="menu-topline"><span class="price">¥22</span><span class="muted-p">经典</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="燕麦拿铁">
+        <img src="./img/menu-7.webp" alt="燕麦拿铁" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>燕麦拿铁</h3><button class="fav-btn" data-fav="燕麦拿铁">♡</button></div>
+          <p class="muted-p">燕麦奶替代牛奶，口感更轻盈，谷物香气明显。</p>
+          <div class="menu-topline"><span class="price">¥30</span><span class="muted-p">推荐</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="蜂蜜拿铁">
+        <img src="./img/menu-8.webp" alt="蜂蜜拿铁" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>蜂蜜拿铁</h3><button class="fav-btn" data-fav="蜂蜜拿铁">♡</button></div>
+          <p class="muted-p">天然蜂蜜与浓缩融合，甜而不腻，适合秋冬。</p>
+          <div class="menu-topline"><span class="price">¥32</span><span class="muted-p">人气</span></div>
+        </div>
+      </article>
+      </div>
+    <div class="menu-panel" id="menuPanelspecial" style="display:none">
+        <h3 id="menuSectionLabel">特调系列</h3>
+        <p id="menuIntroText">季节感更强、风味更有记忆点的限定/创意组合。</p>
+        <div class="menu-badge-row">
+          <span class="menu-badge">推荐</span><span class="menu-badge">热销</span><span class="menu-badge">季节限定</span><span class="menu-badge">适合拍照</span>
+        </div>
+      </div>
+      <div class="menu-panel" id="menuGuidespecial" style="display:none">
+        <h3>本页说明</h3>
+        <div class="menu-list">
+            <div class="menu-list-item"><div><strong>黑糖燕麦拿铁</strong><span>黑糖甜香与燕麦奶的柔和融合。</span></div><span>✓</span></div>
+            <div class="menu-list-item"><div><strong>抹茶云朵</strong><span>茶香清雅，口感轻盈。</span></div><span>✓</span></div>
+            <div class="menu-list-item"><div><strong>桂花冷萃</strong><span>清甜回甘，夏日感很强。</span></div><span>✓</span></div>
+            <div class="menu-list-item"><div><strong>焦糖海盐冰拿铁</strong><span>微咸焦糖平衡甜感。</span></div><span>✓</span></div>
+        </div>
+      </div>
+      <div class="menu-grid" id="menuGridspecial" style="display:none">
+      <article class="menu-card" data-item="黑糖燕麦拿铁">
+        <img src="./img/special-1.jpg" alt="黑糖燕麦拿铁" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>黑糖燕麦拿铁</h3><button class="fav-btn" data-fav="黑糖燕麦拿铁">♡</button></div>
+          <p class="muted-p">黑糖甜香搭配燕麦奶，温润不腻。</p>
+          <div class="menu-topline"><span class="price">¥34</span><span class="muted-p">限定</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="海盐雾盖可可">
+        <img src="./img/special-2.jpg" alt="海盐雾盖可可" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>海盐雾盖可可</h3><button class="fav-btn" data-fav="海盐雾盖可可">♡</button></div>
+          <p class="muted-p">咸甜交织，适合午後小憩。</p>
+          <div class="menu-topline"><span class="price">¥31</span><span class="muted-p">限定</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="抹茶云朵">
+        <img src="./img/special-3.jpg" alt="抹茶云朵" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>抹茶云朵</h3><button class="fav-btn" data-fav="抹茶云朵">♡</button></div>
+          <p class="muted-p">茶香清雅，口感轻盈顺滑。</p>
+          <div class="menu-topline"><span class="price">¥33</span><span class="muted-p">热门</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="桂花冷萃">
+        <img src="./img/special-4.jpg" alt="桂花冷萃" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>桂花冷萃</h3><button class="fav-btn" data-fav="桂花冷萃">♡</button></div>
+          <p class="muted-p">冷萃基底加入桂花蜜，清甜回甘。</p>
+          <div class="menu-topline"><span class="price">¥35</span><span class="muted-p">季节</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="焦糖海盐冰拿铁">
+        <img src="./img/special-5.jpg" alt="焦糖海盐冰拿铁" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>焦糖海盐冰拿铁</h3><button class="fav-btn" data-fav="焦糖海盐冰拿铁">♡</button></div>
+          <p class="muted-p">微咸焦糖平衡甜感，层次更丰富。</p>
+          <div class="menu-topline"><span class="price">¥34</span><span class="muted-p">推荐</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="蜜桃乌龙">
+        <img src="./img/special-6.webp" alt="蜜桃乌龙" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>蜜桃乌龙</h3><button class="fav-btn" data-fav="蜜桃乌龙">♡</button></div>
+          <p class="muted-p">乌龙茶底搭配蜜桃果肉，清新鲜爽。</p>
+          <div class="menu-topline"><span class="price">¥32</span><span class="muted-p">季节</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="薄荷冰咖">
+        <img src="./img/special-7.webp" alt="薄荷冰咖" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>薄荷冰咖</h3><button class="fav-btn" data-fav="薄荷冰咖">♡</button></div>
+          <p class="muted-p">薄荷清凉感与浓缩融合，醒神解暑。</p>
+          <div class="menu-topline"><span class="price">¥30</span><span class="muted-p">限定</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="摩卡星冰">
+        <img src="./img/special-8.webp" alt="摩卡星冰" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>摩卡星冰</h3><button class="fav-btn" data-fav="摩卡星冰">♡</button></div>
+          <p class="muted-p">巧克力与咖啡层层叠加，顶部奶油轻盈。</p>
+          <div class="menu-topline"><span class="price">¥36</span><span class="muted-p">热门</span></div>
+        </div>
+      </article>
+      </div>
+    <div class="menu-panel" id="menuPanelbakery" style="display:none">
+        <h3 id="menuSectionLabel">烘焙点心</h3>
+        <p id="menuIntroText">适合搭配咖啡的现烤点心，强调口感和香气的层次。</p>
+        <div class="menu-badge-row">
+          <span class="menu-badge">推荐</span><span class="menu-badge">热销</span><span class="menu-badge">季节限定</span><span class="menu-badge">适合拍照</span>
+        </div>
+      </div>
+      <div class="menu-panel" id="menuGuidebakery" style="display:none">
+        <h3>本页说明</h3>
+        <div class="menu-list">
+            <div class="menu-list-item"><div><strong>黄油可颂</strong><span>层层起酥，黄油香浓。</span></div><span>✓</span></div>
+            <div class="menu-list-item"><div><strong>蓝莓司康</strong><span>外脆内软，果香明显。</span></div><span>✓</span></div>
+            <div class="menu-list-item"><div><strong>提拉米苏杯</strong><span>咖啡酒香浓郁。</span></div><span>✓</span></div>
+            <div class="menu-list-item"><div><strong>香蕉磅蛋糕</strong><span>湿润绵密，适合热咖啡。</span></div><span>✓</span></div>
+        </div>
+      </div>
+      <div class="menu-grid" id="menuGridbakery" style="display:none">
+      <article class="menu-card" data-item="蓝莓司康">
+        <img src="./img/bakery-1.jpg" alt="蓝莓司康" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>蓝莓司康</h3><button class="fav-btn" data-fav="蓝莓司康">♡</button></div>
+          <p class="muted-p">外层微脆，内部松软，果香明显。</p>
+          <div class="menu-topline"><span class="price">¥18</span><span class="muted-p">甜点</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="黄油可颂">
+        <img src="./img/bakery-2.jpg" alt="黄油可颂" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>黄油可颂</h3><button class="fav-btn" data-fav="黄油可颂">♡</button></div>
+          <p class="muted-p">层层起酥，黄油香浓。</p>
+          <div class="menu-topline"><span class="price">¥16</span><span class="muted-p">热卖</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="香蕉磅蛋糕">
+        <img src="./img/bakery-3.jpg" alt="香蕉磅蛋糕" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>香蕉磅蛋糕</h3><button class="fav-btn" data-fav="香蕉磅蛋糕">♡</button></div>
+          <p class="muted-p">湿润绵密，适合搭配热咖啡。</p>
+          <div class="menu-topline"><span class="price">¥19</span><span class="muted-p">推荐</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="抹茶红豆卷">
+        <img src="./img/bakery-4.jpg" alt="抹茶红豆卷" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>抹茶红豆卷</h3><button class="fav-btn" data-fav="抹茶红豆卷">♡</button></div>
+          <p class="muted-p">茶香与豆香融合，口感柔软。</p>
+          <div class="menu-topline"><span class="price">¥22</span><span class="muted-p">人气</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="提拉米苏杯">
+        <img src="./img/bakery-5.jpg" alt="提拉米苏杯" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>提拉米苏杯</h3><button class="fav-btn" data-fav="提拉米苏杯">♡</button></div>
+          <p class="muted-p">咖啡酒香浓郁，细腻顺滑。</p>
+          <div class="menu-topline"><span class="price">¥26</span><span class="muted-p">经典</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="杏仁可颂">
+        <img src="./img/bakery-6.webp" alt="杏仁可颂" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>杏仁可颂</h3><button class="fav-btn" data-fav="杏仁可颂">♡</button></div>
+          <p class="muted-p">杏仁片洒满可颂表面，烤制后酥香加倍。</p>
+          <div class="menu-topline"><span class="price">¥18</span><span class="muted-p">热卖</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="曲奇饼干">
+        <img src="./img/bakery-7.webp" alt="曲奇饼干" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>曲奇饼干</h3><button class="fav-btn" data-fav="曲奇饼干">♡</button></div>
+          <p class="muted-p">黄油曲奇搭配巧克力碎，酥松可口。</p>
+          <div class="menu-topline"><span class="price">¥12</span><span class="muted-p">甜点</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="轻芝士蛋糕">
+        <img src="./img/bakery-8.webp" alt="轻芝士蛋糕" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>轻芝士蛋糕</h3><button class="fav-btn" data-fav="轻芝士蛋糕">♡</button></div>
+          <p class="muted-p">日式轻芝士工艺，入口即化，奶香柔和。</p>
+          <div class="menu-topline"><span class="price">¥24</span><span class="muted-p">人气</span></div>
+        </div>
+      </article>
+      </div>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-tab="coffee">咖啡</button>
+        <button class="tab" data-tab="special">特调</button>
+        <button class="tab" data-tab="bakery">烘焙</button>
+      </div>
+      <div id="menuAllGrid">
+        <div class="menu-grid" id="menuGridCoffee" style="display:block">
+      <article class="menu-card" data-item="留白拿铁">
+        <img src="./img/hero-2.jpg" alt="留白拿铁" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>留白拿铁</h3><button class="fav-btn" data-fav="留白拿铁">♡</button></div>
+          <p class="muted-p">柔和奶香与中度烘焙拼配豆，入口顺滑。</p>
+          <div class="menu-topline"><span class="price">¥28</span><span class="muted-p">热门</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="晨雾美式">
+        <img src="./img/menu-2.jpg" alt="晨雾美式" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>晨雾美式</h3><button class="fav-btn" data-fav="晨雾美式">♡</button></div>
+          <p class="muted-p">干净明亮，适合早晨醒神与长时间工作。</p>
+          <div class="menu-topline"><span class="price">¥24</span><span class="muted-p">经典</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="焦糖玛奇朵">
+        <img src="./img/menu-3.jpg" alt="焦糖玛奇朵" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>焦糖玛奇朵</h3><button class="fav-btn" data-fav="焦糖玛奇朵">♡</button></div>
+          <p class="muted-p">层次分明，焦糖香气与浓缩风味彼此衬托。</p>
+          <div class="menu-topline"><span class="price">¥32</span><span class="muted-p">推荐</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="手冲耶加雪菲">
+        <img src="./img/menu-4.jpg" alt="手冲耶加雪菲" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>手冲耶加雪菲</h3><button class="fav-btn" data-fav="手冲耶加雪菲">♡</button></div>
+          <p class="muted-p">花香与柑橘酸质平衡，尾韵干净。</p>
+          <div class="menu-topline"><span class="price">¥36</span><span class="muted-p">精品</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="榛果拿铁">
+        <img src="./img/menu-5.jpg" alt="榛果拿铁" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>榛果拿铁</h3><button class="fav-btn" data-fav="榛果拿铁">♡</button></div>
+          <p class="muted-p">榛果香气与奶泡融合，口感温润。</p>
+          <div class="menu-topline"><span class="price">¥30</span><span class="muted-p">热门</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="冰美式">
+        <img src="./img/menu-6.webp" alt="冰美式" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>冰美式</h3><button class="fav-btn" data-fav="冰美式">♡</button></div>
+          <p class="muted-p">浓缩与冰水混合，清爽解暑，适合夏日午后。</p>
+          <div class="menu-topline"><span class="price">¥22</span><span class="muted-p">经典</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="燕麦拿铁">
+        <img src="./img/menu-7.webp" alt="燕麦拿铁" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>燕麦拿铁</h3><button class="fav-btn" data-fav="燕麦拿铁">♡</button></div>
+          <p class="muted-p">燕麦奶替代牛奶，口感更轻盈，谷物香气明显。</p>
+          <div class="menu-topline"><span class="price">¥30</span><span class="muted-p">推荐</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="蜂蜜拿铁">
+        <img src="./img/menu-8.webp" alt="蜂蜜拿铁" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>蜂蜜拿铁</h3><button class="fav-btn" data-fav="蜂蜜拿铁">♡</button></div>
+          <p class="muted-p">天然蜂蜜与浓缩融合，甜而不腻，适合秋冬。</p>
+          <div class="menu-topline"><span class="price">¥32</span><span class="muted-p">人气</span></div>
+        </div>
+      </article>
+        </div>
+        <div class="menu-grid" id="menuGridSpecial" style="display:none">
+      <article class="menu-card" data-item="黑糖燕麦拿铁">
+        <img src="./img/special-1.jpg" alt="黑糖燕麦拿铁" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>黑糖燕麦拿铁</h3><button class="fav-btn" data-fav="黑糖燕麦拿铁">♡</button></div>
+          <p class="muted-p">黑糖甜香搭配燕麦奶，温润不腻。</p>
+          <div class="menu-topline"><span class="price">¥34</span><span class="muted-p">限定</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="海盐雾盖可可">
+        <img src="./img/special-2.jpg" alt="海盐雾盖可可" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>海盐雾盖可可</h3><button class="fav-btn" data-fav="海盐雾盖可可">♡</button></div>
+          <p class="muted-p">咸甜交织，适合午後小憩。</p>
+          <div class="menu-topline"><span class="price">¥31</span><span class="muted-p">限定</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="抹茶云朵">
+        <img src="./img/special-3.jpg" alt="抹茶云朵" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>抹茶云朵</h3><button class="fav-btn" data-fav="抹茶云朵">♡</button></div>
+          <p class="muted-p">茶香清雅，口感轻盈顺滑。</p>
+          <div class="menu-topline"><span class="price">¥33</span><span class="muted-p">热门</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="桂花冷萃">
+        <img src="./img/special-4.jpg" alt="桂花冷萃" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>桂花冷萃</h3><button class="fav-btn" data-fav="桂花冷萃">♡</button></div>
+          <p class="muted-p">冷萃基底加入桂花蜜，清甜回甘。</p>
+          <div class="menu-topline"><span class="price">¥35</span><span class="muted-p">季节</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="焦糖海盐冰拿铁">
+        <img src="./img/special-5.jpg" alt="焦糖海盐冰拿铁" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>焦糖海盐冰拿铁</h3><button class="fav-btn" data-fav="焦糖海盐冰拿铁">♡</button></div>
+          <p class="muted-p">微咸焦糖平衡甜感，层次更丰富。</p>
+          <div class="menu-topline"><span class="price">¥34</span><span class="muted-p">推荐</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="蜜桃乌龙">
+        <img src="./img/special-6.webp" alt="蜜桃乌龙" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>蜜桃乌龙</h3><button class="fav-btn" data-fav="蜜桃乌龙">♡</button></div>
+          <p class="muted-p">乌龙茶底搭配蜜桃果肉，清新鲜爽。</p>
+          <div class="menu-topline"><span class="price">¥32</span><span class="muted-p">季节</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="薄荷冰咖">
+        <img src="./img/special-7.webp" alt="薄荷冰咖" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>薄荷冰咖</h3><button class="fav-btn" data-fav="薄荷冰咖">♡</button></div>
+          <p class="muted-p">薄荷清凉感与浓缩融合，醒神解暑。</p>
+          <div class="menu-topline"><span class="price">¥30</span><span class="muted-p">限定</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="摩卡星冰">
+        <img src="./img/special-8.webp" alt="摩卡星冰" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>摩卡星冰</h3><button class="fav-btn" data-fav="摩卡星冰">♡</button></div>
+          <p class="muted-p">巧克力与咖啡层层叠加，顶部奶油轻盈。</p>
+          <div class="menu-topline"><span class="price">¥36</span><span class="muted-p">热门</span></div>
+        </div>
+      </article>
+        </div>
+        <div class="menu-grid" id="menuGridBakery" style="display:none">
+      <article class="menu-card" data-item="蓝莓司康">
+        <img src="./img/bakery-1.jpg" alt="蓝莓司康" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>蓝莓司康</h3><button class="fav-btn" data-fav="蓝莓司康">♡</button></div>
+          <p class="muted-p">外层微脆，内部松软，果香明显。</p>
+          <div class="menu-topline"><span class="price">¥18</span><span class="muted-p">甜点</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="黄油可颂">
+        <img src="./img/bakery-2.jpg" alt="黄油可颂" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>黄油可颂</h3><button class="fav-btn" data-fav="黄油可颂">♡</button></div>
+          <p class="muted-p">层层起酥，黄油香浓。</p>
+          <div class="menu-topline"><span class="price">¥16</span><span class="muted-p">热卖</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="香蕉磅蛋糕">
+        <img src="./img/bakery-3.jpg" alt="香蕉磅蛋糕" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>香蕉磅蛋糕</h3><button class="fav-btn" data-fav="香蕉磅蛋糕">♡</button></div>
+          <p class="muted-p">湿润绵密，适合搭配热咖啡。</p>
+          <div class="menu-topline"><span class="price">¥19</span><span class="muted-p">推荐</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="抹茶红豆卷">
+        <img src="./img/bakery-4.jpg" alt="抹茶红豆卷" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>抹茶红豆卷</h3><button class="fav-btn" data-fav="抹茶红豆卷">♡</button></div>
+          <p class="muted-p">茶香与豆香融合，口感柔软。</p>
+          <div class="menu-topline"><span class="price">¥22</span><span class="muted-p">人气</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="提拉米苏杯">
+        <img src="./img/bakery-5.jpg" alt="提拉米苏杯" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>提拉米苏杯</h3><button class="fav-btn" data-fav="提拉米苏杯">♡</button></div>
+          <p class="muted-p">咖啡酒香浓郁，细腻顺滑。</p>
+          <div class="menu-topline"><span class="price">¥26</span><span class="muted-p">经典</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="杏仁可颂">
+        <img src="./img/bakery-6.webp" alt="杏仁可颂" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>杏仁可颂</h3><button class="fav-btn" data-fav="杏仁可颂">♡</button></div>
+          <p class="muted-p">杏仁片洒满可颂表面，烤制后酥香加倍。</p>
+          <div class="menu-topline"><span class="price">¥18</span><span class="muted-p">热卖</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="曲奇饼干">
+        <img src="./img/bakery-7.webp" alt="曲奇饼干" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>曲奇饼干</h3><button class="fav-btn" data-fav="曲奇饼干">♡</button></div>
+          <p class="muted-p">黄油曲奇搭配巧克力碎，酥松可口。</p>
+          <div class="menu-topline"><span class="price">¥12</span><span class="muted-p">甜点</span></div>
+        </div>
+      </article>
+      <article class="menu-card" data-item="轻芝士蛋糕">
+        <img src="./img/bakery-8.webp" alt="轻芝士蛋糕" />
+        <div class="card-body">
+          <div class="menu-topline"><h3>轻芝士蛋糕</h3><button class="fav-btn" data-fav="轻芝士蛋糕">♡</button></div>
+          <p class="muted-p">日式轻芝士工艺，入口即化，奶香柔和。</p>
+          <div class="menu-topline"><span class="price">¥24</span><span class="muted-p">人气</span></div>
+        </div>
+      </article>
+        </div>
+      </div>
+      <div class="banner"><div class="section-head" style="margin-bottom:0"><div><p class="eyebrow">Selection Guide</p><h2>点单建议</h2></div></div>
+      <div class="promo-grid">
+        <article class="promo-card"><h3>第一次来</h3><p>建议从留白拿铁、晨雾美式开始，风味更容易接受。</p></article>
+        <article class="promo-card"><h3>喜欢甜感</h3><p>黑糖燕麦拿铁、焦糖玛奇朵、提拉米苏杯很适合。</p></article>
+        <article class="promo-card"><h3>喜欢清爽</h3><p>手冲耶加雪菲、桂花冷萃、海盐雾盖可可会更清透。</p></article>
+        <article class="promo-card"><h3>下午茶搭配</h3><p>蓝莓司康、黄油可颂、香蕉磅蛋糕都很百搭。</p></article>
+      </div></div>
+      <div class="banner"><div class="section-head" style="margin-bottom:0"><div><p class="eyebrow">Hot List</p><h2>热销排行</h2></div></div>
+      <div class="grid">
+        <article class="card"><h3>1. 留白拿铁</h3><p>稳定、顺滑、适配大多数人群。</p></article>
+        <article class="card"><h3>2. 黑糖燕麦拿铁</h3><p>甜感高，适合偏爱奶咖的人。</p></article>
+        <article class="card"><h3>3. 抹茶云朵</h3><p>高颜值与轻盈口感兼具。</p></article>
+        <article class="card"><h3>4. 蓝莓司康</h3><p>早餐和下午茶都很受欢迎。</p></article>
+        <article class="card"><h3>5. 焦糖玛奇朵</h3><p>经典甜香，适合初次来店。</p></article>
+        <article class="card"><h3>6. 手冲耶加雪菲</h3><p>清爽花果香，适合慢慢品味。</p></article>
+      </div></div>
+      <div class="banner"><div class="section-head" style="margin-bottom:0"><div><p class="eyebrow">Seasonal</p><h2>季节限定</h2></div></div>
+      <div class="grid">
+        <article class="card"><h3>桂花冷萃</h3><p>夏秋时段的花香冷饮，清爽回甘。</p></article>
+        <article class="card"><h3>焦糖海盐冰拿铁</h3><p>带一点咸味的平衡型冰饮。</p></article>
+        <article class="card"><h3>海盐雾盖可可</h3><p>适合天气热的时候来一杯。</p></article>
+        <article class="card"><h3>抹茶红豆卷</h3><p>茶香与豆香的节令甜点组合。</p></article>
+        <article class="card"><h3>柚子气泡美式</h3><p>清爽气泡感，适合夏天午后。</p></article>
+        <article class="card"><h3>杏仁奶咖</h3><p>更轻盈的坚果奶香版本。</p></article>
+      </div></div>
+      <div class="banner"><div class="section-head" style="margin-bottom:0"><div><p class="eyebrow">Pairing Tips</p><h2>搭配推荐</h2></div></div>
+      <div class="grid">
+        <article class="card"><h3>热饮 + 酥点</h3><p>适合清晨和冷天气，口感很稳。</p></article>
+        <article class="card"><h3>冷萃 + 柑橘系甜点</h3><p>更清爽，适合夏天。</p></article>
+        <article class="card"><h3>奶咖 + 巧克力甜点</h3><p>适合喜欢浓郁风味的人。</p></article>
+        <article class="card"><h3>手冲 + 原味司康</h3><p>能更突出咖啡本身层次。</p></article>
+      </div></div>
+    </section>
+    </main>
+
+    <!-- ====== 页脚 ====== -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="brand-name">留白 coffee</div>
+          <div class="brand-tag">Warm Minimal Café — 保留空间与情绪的呼吸感</div>
+        </div>
+        <nav class="footer-nav">
+          <a href="home.html">首页</a>
+          <a href="menu.html">菜单</a>
+          <a href="about.html">关于</a>
+          <a href="contact.html">联系</a>
+          <a href="community.html">社区</a>
+        </nav>
+        <div class="footer-info">
+          <span>© 2026 留白 coffee</span>
+          <span>地址：留白街 12 号</span>
+          <span>营业时间：8:00 – 21:00</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- 背景音乐（隐藏播放器，mp3 循环播放） -->
+  <audio id="bgMusic" src="123.mp3" loop preload="auto"></audio>
+
+  <!-- 详情弹窗 -->
+  <div class="modal" id="detailModal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">×</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- Toast 消息提示 -->
+  <div class="toast" id="toast"></div>
+
+  <!-- 回到顶部按钮 -->
+  <button class="back-to-top" id="backToTop" title="回到顶部" aria-label="回到顶部">↑</button>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>
