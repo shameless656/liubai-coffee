@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="留白 coffee 精选菜单 - 咖啡、特调、烘焙甜点，支持搜索收藏与在线点单。" />
+  <meta property="og:title" content="留白 coffee - 精选菜单" />
+  <meta property="og:description" content="留白 coffee 精选菜单 - 咖啡、特调、烘焙甜点，支持搜索收藏与在线点单。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="./img/hero-1.webp" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%98%95%3C/text%3E%3C/svg%3E" />
   <title>留白 coffee - 精选菜单</title>
 
   <!-- 字体 & 样式 -->
@@ -15,10 +21,10 @@
   <link rel="stylesheet" href="./css/style.css" />
 
   <!-- 预加载关键图片，首屏无需等待 -->
-  <link rel="preload" as="image" href="./img/hero-1.jpg" />
-  <link rel="preload" as="image" href="./img/hero-2.jpg" />
-  <link rel="preload" as="image" href="./img/hero-3.jpg" />
-  <link rel="preload" as="image" href="./img/hero-4.jpg" />
+  <link rel="preload" as="image" href="./img/hero-1.webp" />
+  <link rel="preload" as="image" href="./img/hero-2.webp" />
+  <link rel="preload" as="image" href="./img/hero-3.webp" />
+  <link rel="preload" as="image" href="./img/hero-4.webp" />
   <link rel="preload" as="image" href="./img/about-slide-1.webp" />
   <link rel="preload" as="image" href="./img/about-slide-2.webp" />
   <link rel="preload" as="image" href="./img/about-slide-3.webp" />
@@ -40,7 +46,7 @@
       <div class="brand">
         <div class="brand-mark">
           <img
-            src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=400&q=80"
+            src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=400&q=80" onerror="this.outerHTML=&quot;&lt;span style=display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;font-size:18px&gt;留&lt;/span&gt;&quot;"
             alt="卡布奇诺"
           />
         </div>
@@ -65,7 +71,7 @@
       </div>
     </header>
 
-    <!-- ====== SPA 主内容区（JS 动态渲染） ====== -->
+    
     <main id="app" class="page">
     <section class="panel">
       <div class="section-head">
@@ -95,7 +101,7 @@
       </div>
       <div class="menu-grid">
         <article class="menu-card" data-category="coffee" data-item="留白拿铁">
-          <img src="./img/hero-2.jpg" alt="留白拿铁" />
+          <img src="./img/hero-2.webp" alt="留白拿铁" />
           <div class="card-body">
             <div class="menu-topline">
               <h3>留白拿铁</h3>
@@ -112,7 +118,7 @@
           </div>
         </article>
         <article class="menu-card" data-category="coffee" data-item="晨雾美式">
-          <img src="./img/menu-2.jpg" alt="晨雾美式" />
+          <img src="./img/menu-2.webp" alt="晨雾美式" />
           <div class="card-body">
             <div class="menu-topline">
               <h3>晨雾美式</h3>
@@ -129,7 +135,7 @@
           </div>
         </article>
         <article class="menu-card" data-category="coffee" data-item="焦糖玛奇朵">
-          <img src="./img/menu-3.jpg" alt="焦糖玛奇朵" />
+          <img src="./img/menu-3.webp" alt="焦糖玛奇朵" />
           <div class="card-body">
             <div class="menu-topline">
               <h3>焦糖玛奇朵</h3>
@@ -146,7 +152,7 @@
           </div>
         </article>
         <article class="menu-card" data-category="coffee" data-item="手冲耶加雪菲">
-          <img src="./img/menu-4.jpg" alt="手冲耶加雪菲" />
+          <img src="./img/menu-4.webp" alt="手冲耶加雪菲" />
           <div class="card-body">
             <div class="menu-topline">
               <h3>手冲耶加雪菲</h3>
@@ -163,7 +169,7 @@
           </div>
         </article>
         <article class="menu-card" data-category="coffee" data-item="榛果拿铁">
-          <img src="./img/menu-5.jpg" alt="榛果拿铁" />
+          <img src="./img/menu-5.webp" alt="榛果拿铁" />
           <div class="card-body">
             <div class="menu-topline">
               <h3>榛果拿铁</h3>
@@ -249,7 +255,7 @@
       </div>
       <div class="menu-grid">
         <article class="menu-card" data-category="special" data-item="黑糖燕麦拿铁">
-          <img src="./img/special-1.jpg" alt="黑糖燕麦拿铁" />
+          <img src="./img/special-1.webp" alt="黑糖燕麦拿铁" />
           <div class="card-body">
             <div class="menu-topline">
               <h3>黑糖燕麦拿铁</h3>
@@ -266,7 +272,7 @@
           </div>
         </article>
         <article class="menu-card" data-category="special" data-item="海盐雾盖可可">
-          <img src="./img/special-2.jpg" alt="海盐雾盖可可" />
+          <img src="./img/special-2.webp" alt="海盐雾盖可可" />
           <div class="card-body">
             <div class="menu-topline">
               <h3>海盐雾盖可可</h3>
@@ -283,7 +289,7 @@
           </div>
         </article>
         <article class="menu-card" data-category="special" data-item="抹茶云朵">
-          <img src="./img/special-3.jpg" alt="抹茶云朵" />
+          <img src="./img/special-3.webp" alt="抹茶云朵" />
           <div class="card-body">
             <div class="menu-topline">
               <h3>抹茶云朵</h3>
@@ -300,7 +306,7 @@
           </div>
         </article>
         <article class="menu-card" data-category="special" data-item="桂花冷萃">
-          <img src="./img/special-4.jpg" alt="桂花冷萃" />
+          <img src="./img/special-4.webp" alt="桂花冷萃" />
           <div class="card-body">
             <div class="menu-topline">
               <h3>桂花冷萃</h3>
@@ -317,7 +323,7 @@
           </div>
         </article>
         <article class="menu-card" data-category="special" data-item="焦糖海盐冰拿铁">
-          <img src="./img/special-5.jpg" alt="焦糖海盐冰拿铁" />
+          <img src="./img/special-5.webp" alt="焦糖海盐冰拿铁" />
           <div class="card-body">
             <div class="menu-topline">
               <h3>焦糖海盐冰拿铁</h3>
@@ -403,7 +409,7 @@
       </div>
       <div class="menu-grid">
         <article class="menu-card" data-category="bakery" data-item="蓝莓司康">
-          <img src="./img/bakery-1.jpg" alt="蓝莓司康" />
+          <img src="./img/bakery-1.webp" alt="蓝莓司康" />
           <div class="card-body">
             <div class="menu-topline">
               <h3>蓝莓司康</h3>
@@ -420,7 +426,7 @@
           </div>
         </article>
         <article class="menu-card" data-category="bakery" data-item="黄油可颂">
-          <img src="./img/bakery-2.jpg" alt="黄油可颂" />
+          <img src="./img/bakery-2.webp" alt="黄油可颂" />
           <div class="card-body">
             <div class="menu-topline">
               <h3>黄油可颂</h3>
@@ -437,7 +443,7 @@
           </div>
         </article>
         <article class="menu-card" data-category="bakery" data-item="香蕉磅蛋糕">
-          <img src="./img/bakery-3.jpg" alt="香蕉磅蛋糕" />
+          <img src="./img/bakery-3.webp" alt="香蕉磅蛋糕" />
           <div class="card-body">
             <div class="menu-topline">
               <h3>香蕉磅蛋糕</h3>
@@ -454,7 +460,7 @@
           </div>
         </article>
         <article class="menu-card" data-category="bakery" data-item="抹茶红豆卷">
-          <img src="./img/bakery-4.jpg" alt="抹茶红豆卷" />
+          <img src="./img/bakery-4.webp" alt="抹茶红豆卷" />
           <div class="card-body">
             <div class="menu-topline">
               <h3>抹茶红豆卷</h3>
@@ -471,7 +477,7 @@
           </div>
         </article>
         <article class="menu-card" data-category="bakery" data-item="提拉米苏杯">
-          <img src="./img/bakery-5.jpg" alt="提拉米苏杯" />
+          <img src="./img/bakery-5.webp" alt="提拉米苏杯" />
           <div class="card-body">
             <div class="menu-topline">
               <h3>提拉米苏杯</h3>
@@ -640,7 +646,7 @@
   </div>
 
   <!-- 背景音乐（隐藏播放器，mp3 循环播放） -->
-  <audio id="bgMusic" src="123.mp3" loop preload="auto"></audio>
+  <audio id="bgMusic" src="音频文件/123.mp3" loop preload="auto"></audio>
 
   <!-- 详情弹窗 -->
   <div class="modal" id="detailModal" aria-hidden="true">
