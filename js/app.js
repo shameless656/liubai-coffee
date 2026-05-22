@@ -24,10 +24,10 @@ const modalClose = document.getElementById("modalClose");
 
 /** 首页 Hero 轮播图 */
 const heroImages = [
-  "./img/hero-1.jpg",
-  "./img/hero-2.jpg",
-  "./img/hero-3.jpg",
-  "./img/hero-4.jpg",
+  "./img/hero-1.webp",
+  "./img/hero-2.webp",
+  "./img/hero-3.webp",
+  "./img/hero-4.webp",
 ];
 
 const heroCaptions = [
@@ -58,31 +58,31 @@ const aboutCaptions = [
  */
 const menuData = {
   coffee: [
-    ["留白拿铁", "柔和奶香与中度烘焙拼配豆，入口顺滑。", "./img/hero-2.jpg", 28, "奶香", "顺滑", "热门"],
-    ["晨雾美式", "干净明亮，适合早晨醒神与长时间工作。", "./img/menu-2.jpg", 24, "清爽", "提神", "经典"],
-    ["焦糖玛奇朵", "层次分明，焦糖香气与浓缩风味彼此衬托。", "./img/menu-3.jpg", 32, "甜香", "浓郁", "推荐"],
-    ["手冲耶加雪菲", "花香与柑橘酸质平衡，尾韵干净。", "./img/menu-4.jpg", 36, "果香", "手冲", "精品"],
-    ["榛果拿铁", "榛果香气与奶泡融合，口感温润。", "./img/menu-5.jpg", 30, "坚果", "温润", "热门"],
+    ["留白拿铁", "柔和奶香与中度烘焙拼配豆，入口顺滑。", "./img/hero-2.webp", 28, "奶香", "顺滑", "热门"],
+    ["晨雾美式", "干净明亮，适合早晨醒神与长时间工作。", "./img/menu-2.webp", 24, "清爽", "提神", "经典"],
+    ["焦糖玛奇朵", "层次分明，焦糖香气与浓缩风味彼此衬托。", "./img/menu-3.webp", 32, "甜香", "浓郁", "推荐"],
+    ["手冲耶加雪菲", "花香与柑橘酸质平衡，尾韵干净。", "./img/menu-4.webp", 36, "果香", "手冲", "精品"],
+    ["榛果拿铁", "榛果香气与奶泡融合，口感温润。", "./img/menu-5.webp", 30, "坚果", "温润", "热门"],
     ["冰美式", "浓缩与冰水混合，清爽解暑，适合夏日午后。", "./img/menu-6.webp", 22, "清爽", "冰饮", "经典"],
     ["燕麦拿铁", "燕麦奶替代牛奶，口感更轻盈，谷物香气明显。", "./img/menu-7.webp", 30, "谷物", "轻盈", "推荐"],
     ["蜂蜜拿铁", "天然蜂蜜与浓缩融合，甜而不腻，适合秋冬。", "./img/menu-8.webp", 32, "蜂蜜", "温润", "人气"],
   ],
   special: [
-    ["黑糖燕麦拿铁", "黑糖甜香搭配燕麦奶，温润不腻。", "./img/special-1.jpg", 34, "黑糖", "燕麦奶", "限定"],
-    ["海盐雾盖可可", "咸甜交织，适合午後小憩。", "./img/special-2.jpg", 31, "可可", "雾盖", "限定"],
-    ["抹茶云朵", "茶香清雅，口感轻盈顺滑。", "./img/special-3.jpg", 33, "抹茶", "轻盈", "热门"],
-    ["桂花冷萃", "冷萃基底加入桂花蜜，清甜回甘。", "./img/special-4.jpg", 35, "花香", "冷萃", "季节"],
-    ["焦糖海盐冰拿铁", "微咸焦糖平衡甜感，层次更丰富。", "./img/special-5.jpg", 34, "冰饮", "层次", "推荐"],
+    ["黑糖燕麦拿铁", "黑糖甜香搭配燕麦奶，温润不腻。", "./img/special-1.webp", 34, "黑糖", "燕麦奶", "限定"],
+    ["海盐雾盖可可", "咸甜交织，适合午後小憩。", "./img/special-2.webp", 31, "可可", "雾盖", "限定"],
+    ["抹茶云朵", "茶香清雅，口感轻盈顺滑。", "./img/special-3.webp", 33, "抹茶", "轻盈", "热门"],
+    ["桂花冷萃", "冷萃基底加入桂花蜜，清甜回甘。", "./img/special-4.webp", 35, "花香", "冷萃", "季节"],
+    ["焦糖海盐冰拿铁", "微咸焦糖平衡甜感，层次更丰富。", "./img/special-5.webp", 34, "冰饮", "层次", "推荐"],
     ["蜜桃乌龙", "乌龙茶底搭配蜜桃果肉，清新鲜爽。", "./img/special-6.webp", 32, "果香", "茶底", "季节"],
     ["薄荷冰咖", "薄荷清凉感与浓缩融合，醒神解暑。", "./img/special-7.webp", 30, "薄荷", "冰饮", "限定"],
     ["摩卡星冰", "巧克力与咖啡层层叠加，顶部奶油轻盈。", "./img/special-8.webp", 36, "巧克力", "奶盖", "热门"],
   ],
   bakery: [
-    ["蓝莓司康", "外层微脆，内部松软，果香明显。", "./img/bakery-1.jpg", 18, "果香", "酥脆", "甜点"],
-    ["黄油可颂", "层层起酥，黄油香浓。", "./img/bakery-2.jpg", 16, "酥皮", "经典", "热卖"],
-    ["香蕉磅蛋糕", "湿润绵密，适合搭配热咖啡。", "./img/bakery-3.jpg", 19, "绵密", "下午茶", "推荐"],
-    ["抹茶红豆卷", "茶香与豆香融合，口感柔软。", "./img/bakery-4.jpg", 22, "抹茶", "豆香", "人气"],
-    ["提拉米苏杯", "咖啡酒香浓郁，细腻顺滑。", "./img/bakery-5.jpg", 26, "咖啡香", "细腻", "经典"],
+    ["蓝莓司康", "外层微脆，内部松软，果香明显。", "./img/bakery-1.webp", 18, "果香", "酥脆", "甜点"],
+    ["黄油可颂", "层层起酥，黄油香浓。", "./img/bakery-2.webp", 16, "酥皮", "经典", "热卖"],
+    ["香蕉磅蛋糕", "湿润绵密，适合搭配热咖啡。", "./img/bakery-3.webp", 19, "绵密", "下午茶", "推荐"],
+    ["抹茶红豆卷", "茶香与豆香融合，口感柔软。", "./img/bakery-4.webp", 22, "抹茶", "豆香", "人气"],
+    ["提拉米苏杯", "咖啡酒香浓郁，细腻顺滑。", "./img/bakery-5.webp", 26, "咖啡香", "细腻", "经典"],
     ["杏仁可颂", "杏仁片洒满可颂表面，烤制后酥香加倍。", "./img/bakery-6.webp", 18, "坚果", "酥脆", "热卖"],
     ["曲奇饼干", "黄油曲奇搭配巧克力碎，酥松可口。", "./img/bakery-7.webp", 12, "酥松", "经典", "甜点"],
     ["轻芝士蛋糕", "日式轻芝士工艺，入口即化，奶香柔和。", "./img/bakery-8.webp", 24, "芝士", "绵密", "人气"],
@@ -99,31 +99,31 @@ const imageMap = {
   ],
   menu: {
     coffee: [
-      "./img/hero-2.jpg",
-      "./img/menu-2.jpg",
-      "./img/menu-3.jpg",
-      "./img/menu-4.jpg",
-      "./img/menu-5.jpg",
+      "./img/hero-2.webp",
+      "./img/menu-2.webp",
+      "./img/menu-3.webp",
+      "./img/menu-4.webp",
+      "./img/menu-5.webp",
       "./img/menu-6.webp",
       "./img/menu-7.webp",
       "./img/menu-8.webp",
     ],
     special: [
-      "./img/special-1.jpg",
-      "./img/special-2.jpg",
-      "./img/special-3.jpg",
-      "./img/special-4.jpg",
-      "./img/special-5.jpg",
+      "./img/special-1.webp",
+      "./img/special-2.webp",
+      "./img/special-3.webp",
+      "./img/special-4.webp",
+      "./img/special-5.webp",
       "./img/special-6.webp",
       "./img/special-7.webp",
       "./img/special-8.webp",
     ],
     bakery: [
-      "./img/bakery-1.jpg",
-      "./img/bakery-2.jpg",
-      "./img/bakery-3.jpg",
-      "./img/bakery-4.jpg",
-      "./img/bakery-5.jpg",
+      "./img/bakery-1.webp",
+      "./img/bakery-2.webp",
+      "./img/bakery-3.webp",
+      "./img/bakery-4.webp",
+      "./img/bakery-5.webp",
       "./img/bakery-6.webp",
       "./img/bakery-7.webp",
       "./img/bakery-8.webp",
@@ -225,32 +225,6 @@ function setBusy(element, isBusy, loadingLabel) {
   }
 }
 
-// ==============================
-// ==============================
-//  页面加载 — 从 pages/ 目录异步 fetch HTML
-// ==============================
-
-const pageCache = {};
-
-async function fetchPage(name) {
-  if (pageCache[name]) return pageCache[name];
-  const res = await fetch('./pages/' + name + '.html');
-  if (!res.ok) throw new Error('Failed to load ' + name);
-  const html = await res.text();
-  pageCache[name] = html;
-  return html;
-}
-
-async function renderPage() {
-  var map = { home: 'home', menu: 'menu', about: 'about', contact: 'contact', community: 'community' };
-  var name = map[state.page] || 'community';
-  try {
-    return await fetchPage(name);
-  } catch (e) {
-    return '<section class="panel"><div class="section-head"><h2>页面加载失败</h2></div><p class="muted-p">请检查网络连接后刷新重试。</p></section>';
-  }
-}
-
 /** 打开菜单详情弹窗 */
 function openMenuDetail(item) {
   modalBody.innerHTML = `
@@ -279,8 +253,8 @@ function openMenuDetail(item) {
   modal.classList.add("show");
   modal.setAttribute("aria-hidden", "false");
 
-  document.getElementById("buyBtn").onclick = () => showToast(`已加入点单：${item[0]}`);
-  document.getElementById("shareBtn").onclick = () => showToast(`已收藏灵感：${item[0]}`);
+  document.getElementById("buyBtn").onclick = () => { addToOrder(item[0], item[3]); showToast(`已加入点单：${item[0]}`); };
+  document.getElementById("shareBtn").onclick = () => { if (!state.favorites.has(item[0])) { state.favorites.add(item[0]); localStorage.setItem("liubai-favorites", JSON.stringify(Array.from(state.favorites))); initFavoriteUI(); } showToast(`已收藏灵感：${item[0]}`); };
 }
 
 // ==============================
@@ -489,6 +463,8 @@ function bindCommunityEvents() {
     return avatarPalette[String(name || "").length % avatarPalette.length];
   }
 
+  let displayLimit = 5;
+
   /**
    * 渲染帖子列表到页面
    * - 排序：置顶优先，然后按时间倒序
@@ -504,8 +480,11 @@ function bindCommunityEvents() {
     count.textContent = posts.length;
     replyCount.textContent = totalReplies;
 
+    const visible = posts.slice(0, displayLimit);
+    const loadMoreBtn = document.getElementById("loadMoreBtn");
+
     feed.innerHTML = posts.length
-      ? posts
+      ? visible
           .map((post, index) => {
             const replies = (post.replies || [])
               .map(
@@ -560,10 +539,24 @@ function bindCommunityEvents() {
     requestAnimationFrame(() =>
       feed.querySelectorAll(".loading-skeleton").forEach((el) => el.classList.remove("loading-skeleton"))
     );
+
+    if (loadMoreBtn) {
+      loadMoreBtn.style.display = posts.length > displayLimit ? "" : "none";
+      loadMoreBtn.textContent = `加载更多（已显示 ${Math.min(displayLimit, posts.length)} / ${posts.length}）`;
+    }
   }
 
   seedPosts();
   renderFeed();
+
+  // ---- 加载更多 ----
+  var loadMoreBtn = document.getElementById("loadMoreBtn");
+  if (loadMoreBtn) {
+    loadMoreBtn.onclick = function () {
+      displayLimit += 5;
+      renderFeed();
+    };
+  }
 
   // ---- 发布帖子 ----
   form.onsubmit = (event) => {
@@ -1029,3 +1022,15 @@ backToTop.onclick = function () {
 
 window.addEventListener("scroll", toggleBackToTop, { passive: true });
 toggleBackToTop();
+
+// ==============================
+//  全局图片加载失败兜底
+// ==============================
+window.addEventListener("error", function (e) {
+  if (e.target && e.target.tagName === "IMG") {
+    e.target.style.background = "linear-gradient(135deg, var(--surface), var(--surface-alt))";
+    e.target.style.objectFit = "contain";
+    e.target.style.padding = "20px";
+    e.target.alt = e.target.alt || "图片加载失败";
+  }
+}, true);
